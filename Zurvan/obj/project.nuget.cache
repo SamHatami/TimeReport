@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oPAGxrf1EO+vMuCqm63Ioca6fxsdCQaoN0aTz5Z4JHnoF+oJECjT6mZ/AOEv6HBFz9utZ5gVSaCggWZwKI9xbg==",
+  "dgSpecHash": "tNBEuCGzGDwfbaeg+kJCQhJglaBuFOW/CpNoAeqMMszcJ9GXTFQFnhpc6AKCSwTJ4kPR5IorJkStlgaw+0UeLA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mhata\\source\\repos\\Zurvan\\Zurvan\\Zurvan.ClientApp.csproj",
+  "projectFilePath": "C:\\Users\\mhata\\OneDrive\\Dokument\\Workspace\\TimeReport\\Zurvan\\Zurvan.ClientApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mhata\\.nuget\\packages\\caliburn.micro\\4.0.212\\caliburn.micro.4.0.212.nupkg.sha512",
     "C:\\Users\\mhata\\.nuget\\packages\\caliburn.micro.core\\4.0.212\\caliburn.micro.core.4.0.212.nupkg.sha512",

@@ -984,11 +984,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mhata\\source\\repos\\Zurvan\\Zurvan\\Zurvan.ClientApp.csproj",
+      "projectUniqueName": "C:\\Users\\mhata\\OneDrive\\Dokument\\Workspace\\TimeReport\\Zurvan\\Zurvan.ClientApp.csproj",
       "projectName": "Zurvan.ClientApp",
-      "projectPath": "C:\\Users\\mhata\\source\\repos\\Zurvan\\Zurvan\\Zurvan.ClientApp.csproj",
+      "projectPath": "C:\\Users\\mhata\\OneDrive\\Dokument\\Workspace\\TimeReport\\Zurvan\\Zurvan.ClientApp.csproj",
       "packagesPath": "C:\\Users\\mhata\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mhata\\source\\repos\\Zurvan\\Zurvan\\obj\\",
+      "outputPath": "C:\\Users\\mhata\\OneDrive\\Dokument\\Workspace\\TimeReport\\Zurvan\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

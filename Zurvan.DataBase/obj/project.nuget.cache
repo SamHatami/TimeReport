@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "xqsaB/Qe7gxr4MuA27aJVHpjzqSmwyrAfx9UzZ9pVaWuS1rz9+fFbOccPv1D7lR9mG9gMS0ESeemvmJe+SonyA==",
+  "dgSpecHash": "7o8+N+/jrCXiJZFVKhSJs7kE2z1Ih7k0XBAUXKgHQ8HIheof7IJvW6oOTOsWUwKJYqwXfZPTh+rViCl71Ny7xw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mhata\\source\\repos\\Zurvan\\Zurvan.DataBase\\Zurvan.DataBase.csproj",
+  "projectFilePath": "C:\\Users\\mhata\\OneDrive\\Dokument\\Workspace\\TimeReport\\Zurvan.DataBase\\Zurvan.DataBase.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mhata\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\mhata\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
