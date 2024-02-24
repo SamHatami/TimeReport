@@ -1,9 +1,7 @@
-﻿<Application x:Class="Zurvan.App"
+﻿<Application x:Class="Zurvan.ClientApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Zurvan"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
     </Application.Resources>
 </Application>
