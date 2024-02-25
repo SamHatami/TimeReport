@@ -14,4 +14,10 @@
     <ProjectReference Include="..\Zurvan.Core\Zurvan.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TimeRecords.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

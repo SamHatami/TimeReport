@@ -1,11 +1,11 @@
 ﻿using Zurvan.Core.Interfaces;
 
-namespace Zurvan.Core.UserTypes
+namespace Zurvan.Core.UserFactory.UserTypes
 {
     internal class Lead : IUser
     {
-        public string FirstName { get; }
-        public string LastName { get; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }    
         public string Email { get; set; }
         public int UserId { get; set; }
         public UserType Type { get; set; }

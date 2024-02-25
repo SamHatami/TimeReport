@@ -1,9 +1,9 @@
 ﻿using Zurvan.Core.Interfaces;
-using Zurvan.Core.UserTypes;
+using Zurvan.Core.UserFactory.UserTypes;
 
-namespace Zurvan.Core
+namespace Zurvan.Core.UserFactory
 {
-    internal class UserCreator : IUserCreator
+    public class UserCreator : IUserCreator
     {
         public IUser NewUser(UserType type)
         {
@@ -20,9 +20,10 @@ namespace Zurvan.Core
 
                 case UserType.Manager:
                     return new Manager();
+                default:
+                    throw new ArgumentException("Unsupported UserType", nameof(type));
             }
-
-            return null;
+            
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Zurvan.Core.Interfaces
+﻿using Zurvan.Core.UserFactory.UserTypes;
+
+namespace Zurvan.Core.Interfaces
 {
     internal interface IUserController
     {
