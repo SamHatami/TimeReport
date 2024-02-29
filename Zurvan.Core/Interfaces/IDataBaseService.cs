@@ -10,6 +10,6 @@
 
         IProject GetProject(int id);
 
-        List<IProject> GetProjects(List<int> ids);
+        List<IProject> GetUserProjects(int userID);
     }
 }

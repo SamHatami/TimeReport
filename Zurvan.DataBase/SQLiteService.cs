@@ -1,7 +1,7 @@
 ﻿using System.Data.SQLite;
 using Zurvan.Core.Interfaces;
+using Zurvan.Core.Projects;
 using Zurvan.Core.UserFactory;
-using Zurvan.Core.UserFactory.UserTypes;
 
 namespace Zurvan.DataBase
 {
@@ -28,7 +28,7 @@ namespace Zurvan.DataBase
 
         public List<IUser> GetAllUsers()
         {
-            var sqlRequestUsers = "select * from Users";
+            var sqlRequestUsers = "SELECT * FROM Users";
             var users = new List<IUser>();
 
             using (SQLiteConnection connection = new SQLiteConnection(database))
@@ -40,17 +40,47 @@ namespace Zurvan.DataBase
                     {
                         if (dataReader.Read())
                         {
-                            var user = new UserCreator().NewUser(UserType.Employee);
-                            dataReader.GetInt16(dataReader.GetOrdinal("id"));
+                            int id = dataReader.GetInt16(dataReader.GetOrdinal("UserID"));
+                            var user = new UserCreator().NewUser(GetUserType(id));
+                            user.UserId = id;
                             user.FirstName = dataReader.GetString(dataReader.GetOrdinal("FirstName"));
                             user.LastName = dataReader.GetString(dataReader.GetOrdinal("LastName"));
+
                             users.Add(user);
                         }
                     }
                 }
-
                 return users;
             }
+        }
+
+        public List<int> GetProjectIds(int userId)
+        {
+            var sqlRequestProjects = "SELECT ProjectsUsers.ProjectID FROM ProjectsUsers INNER JOIN Users ON Users.UserID = ProjectsUsers.UserID WHERE Users.UserID="+userId;
+            List<int> projectIds = new List<int>();
+
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sqlRequestProjects, connection))
+                {
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            int projectId = dataReader.GetInt16(dataReader.GetOrdinal("ProjectID"));
+                            projectIds.Add(projectId);
+                        }
+                    }
+                }
+            }
+
+            return projectIds;
+        }
+
+        public IUser GetUser(int id)
+        {
+            throw new ArgumentException("Could not retrieve with user ID " + id);
         }
 
         public IProject GetProject(int id)
@@ -58,14 +88,78 @@ namespace Zurvan.DataBase
             throw new NotImplementedException();
         }
 
-        public List<IProject> GetProjects(List<int> ids)
+        public List<IProject> GetUserProjects(int userId)
         {
-            throw new NotImplementedException();
+            List<IProject> projects = new List<IProject>();
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                foreach (int projectId in GetProjectIds(userId))
+                {
+                    var sqlRequestUsers = "SELECT * FROM Projects WHERE ProjectID=" + projectId;
+                    
+                    using (var command = new SQLiteCommand(sqlRequestUsers, connection))
+                    {
+                        using (var dataReader = command.ExecuteReader())
+                        {
+                            while (dataReader.Read())
+                            {
+                                IProject project = new Project();
+                                project.id = projectId;
+                                project.Name = dataReader.GetString(dataReader.GetOrdinal("Name"));
+                                projects.Add(project);
+                            }
+                        }
+                    }
+                }
+            }
+            return projects;
         }
 
-        public IUser GetUser(int id)
+        public string GetUserType(int userId)
         {
-            throw new ArgumentException("Could not retrieve with user ID " + id);
+            var sqlRequestUsers = "SELECT UsersTypes.Type FROM UsersTypes JOIN Users ON Users.UserID = UsersTypes.UserID";
+            string userType = String.Empty;
+
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sqlRequestUsers, connection))
+                {
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.Read())
+                        {
+                            userType = dataReader.GetString(dataReader.GetOrdinal("Type"));
+                        }
+                    }
+                }
+            }
+
+            return userType;
+        }
+
+        public List<IUser> GetProjectMembers(int projectId)
+        {
+            var sqlRequestUsers = "select * from ProjectUsers";
+            var users = new List<IUser>();
+
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sqlRequestUsers, connection))
+                {
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.Read())
+                        {
+                        }
+                    }
+                }
+
+            }
+
+            return users;
         }
 
         public void AddNewUser(IUser user)

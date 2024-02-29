@@ -2,7 +2,7 @@
 
 namespace Zurvan.Core.UserFactory.UserTypes
 {
-    internal class Manager : IUser
+    internal class Manager : IManager
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -10,5 +10,8 @@ namespace Zurvan.Core.UserFactory.UserTypes
         public int UserId { get; set; }
         public UserType Type { get; set; }
         public List<IProject> GetProjects { get; }
+        public string DepartmentId { get; set; }
+        public string Department { get; set; }
+        public List<IUser> DepartmentMembers { get; set; }
     }
 }

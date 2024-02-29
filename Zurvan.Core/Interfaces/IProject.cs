@@ -2,9 +2,11 @@
 {
     public interface IProject
     {
-        string Name { get; }
-        string Description { get; }
+        string Name { get; set; }
+        string Description { get; set; }
         int id { get; set; }
+        int AllocatedTime { get; set; }
+        int UsedTime { get; set; }
         List<IUser> Members { get; }
 
         int ShowTotalTimeUsed();

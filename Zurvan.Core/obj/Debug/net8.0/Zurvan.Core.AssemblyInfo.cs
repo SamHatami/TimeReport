@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Zurvan.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95b20d9f26122e1ad2df32f663affdd4c7391470")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06e35746721ff96d445b613426eb931993bdb722")]
 [assembly: System.Reflection.AssemblyProductAttribute("Zurvan.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Zurvan.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

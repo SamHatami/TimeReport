@@ -5,23 +5,23 @@ namespace Zurvan.Core.UserFactory
 {
     public class UserCreator : IUserCreator
     {
-        public IUser NewUser(UserType type)
+        public IUser NewUser(string type)
         {
             switch (type)
             {
-                case UserType.Employee:
+                case "Employee":
                     return new Employee();
 
-                case UserType.Lead:
+                case "Lead":
                     return new Lead();
 
-                case UserType.Administrator:
+                case "Administrator":
                     return new Administrator();
 
-                case UserType.Manager:
+                case "Manager":
                     return new Manager();
                 default:
-                    throw new ArgumentException("Unsupported UserType", nameof(type));
+                    throw new ArgumentException("Unsupported UserType: ", type);
             }
             
         }
