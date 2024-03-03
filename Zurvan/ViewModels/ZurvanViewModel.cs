@@ -89,6 +89,12 @@ namespace Zurvan.ClientApp.ViewModels
                 return false;
             }
 
+            if (!email.Contains('.'))
+            {
+                Message = "Email in wrong format";
+                return false;
+            }
+
             return true;
         }
     }
