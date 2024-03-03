@@ -17,3 +17,4 @@ C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.DataBase\obj\Debug\
 C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.DataBase\obj\Debug\net8.0\Zurvan.DataBase.genruntimeconfig.cache
 C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.DataBase\obj\Debug\net8.0\ref\Zurvan.DataBase.dll
 C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.DataBase\bin\Debug\net8.0\TimeRecords.db
+C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.DataBase\bin\Debug\net8.0\NLog.config

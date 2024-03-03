@@ -1,4 +1,5 @@
 ﻿using System.Data.SQLite;
+using System.Net.Sockets;
 using Zurvan.Core.Interfaces;
 using Zurvan.Core.Projects;
 using Zurvan.Core.UserFactory;
@@ -9,9 +10,11 @@ namespace Zurvan.DataBase
     {
         private string database = "DataSource=TimeRecords.db;Version=3";
         private SQLiteConnection connection;
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public SQLiteService(string connectionString)
+        public SQLiteService()
         {
+            
         }
 
         public string ConnectToDatabase()
@@ -26,6 +29,16 @@ namespace Zurvan.DataBase
             throw new NotImplementedException();
         }
 
+        public IUser GetUser(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Login(string name, string password)
+        {
+            return true;
+        }
+
         public List<IUser> GetAllUsers()
         {
             var sqlRequestUsers = "SELECT * FROM Users";
@@ -38,7 +51,7 @@ namespace Zurvan.DataBase
                 {
                     using (var dataReader = command.ExecuteReader())
                     {
-                        if (dataReader.Read())
+                        while (dataReader.Read())
                         {
                             int id = dataReader.GetInt16(dataReader.GetOrdinal("UserID"));
                             var user = new UserCreator().NewUser(GetUserType(id));
@@ -50,7 +63,9 @@ namespace Zurvan.DataBase
                         }
                     }
                 }
+                Logger.Info("Fetched all users.");
                 return users;
+            
             }
         }
 
@@ -78,13 +93,36 @@ namespace Zurvan.DataBase
             return projectIds;
         }
 
-        public IUser GetUser(int id)
-        {
-            throw new ArgumentException("Could not retrieve with user ID " + id);
-        }
+        //public IUser GetUserByID(int id) // Change this to a open search user?
+        //{
+
+        //    IUser user =  (GetUserType(id));
+        //    string sqlRequestUser = "SELECT * FROM Users WHERE UserID=" + id;
+        //    using (SQLiteConnection connection = new SQLiteConnection(database))
+        //    {
+        //        using (var command = new SQLiteCommand(sqlRequestUser, connection))
+        //        {
+        //            using (var dataReader = command.ExecuteReader())
+        //            {
+        //                if (dataReader.Read())
+        //                {
+        //                    int id = dataReader.GetInt16(dataReader.GetOrdinal("UserID"));
+        //                    var user = new UserCreator().NewUser(GetUserType(id));
+        //                    user.UserId = id;
+        //                    user.FirstName = dataReader.GetString(dataReader.GetOrdinal("FirstName"));
+        //                    user.LastName = dataReader.GetString(dataReader.GetOrdinal("LastName"));
+
+                            
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //}
 
         public IProject GetProject(int id)
         {
+            string sqlRequest = "SELECT * FROM Projects WHERE ProjectID=" + id;
             throw new NotImplementedException();
         }
 

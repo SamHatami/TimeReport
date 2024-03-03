@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan\App.xaml
-11407045341
+3803136835
 
-5-1660676721
-202-1160907198
-MainWindow.xaml;
+9-1850744917
+210-27099691
+ViewModels\AdminView.xaml;ViewModels\UserView.xaml;Views\ZurvanView.xaml;
 
 False
 

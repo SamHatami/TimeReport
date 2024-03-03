@@ -130,3 +130,4 @@ C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.Test\obj\Debug\net8
 C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.Test\obj\Debug\net8.0\Zurvan.Test.genruntimeconfig.cache
 C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.Test\obj\Debug\net8.0\ref\Zurvan.Test.dll
 C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.Test\bin\Debug\net8.0\TimeRecords.db
+C:\Users\mhata\OneDrive\Dokument\Workspace\TimeReport\Zurvan.Test\bin\Debug\net8.0\NLog.dll

@@ -1,0 +1,28 @@
+﻿<Window x:Class="Zurvan.ClientApp.Views.ZurvanView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform" 
+        xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ZurvanViewModel}"
+        mc:Ignorable="d"
+        Title="ZurvanView" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="Email"  Grid.Column="1" HorizontalAlignment="Center" Margin="0,25,0,0" Grid.Row="1" TextWrapping="WrapWithOverflow"  VerticalAlignment="Top" Width="200"/>
+        <TextBox x:Name="Password" Grid.Column="1" HorizontalAlignment="Center" Margin="0,54,0,0" Grid.Row="1" TextWrapping="WrapWithOverflow" VerticalAlignment="Top" Width="200"/>
+        <Button Grid.Column="1" Content="LOG IN" HorizontalAlignment="Center" Margin="0,84,0,0" Grid.Row="1" VerticalAlignment="Top" cal:Message.Attach="[Event Click] = [Action Login()]"/>
+        <CheckBox Grid.Column="1" Content="Auto Login" HorizontalAlignment="Center" Margin="0,119,0,0" Grid.Row="1" VerticalAlignment="Top" />
+        <Label x:Name="Message"  Content="{Binding Path=Message}" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="200" VerticalContentAlignment="Center"/>
+
+    </Grid>
+</Window>

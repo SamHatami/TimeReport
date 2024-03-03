@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Zurvan.DataBase")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06e35746721ff96d445b613426eb931993bdb722")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea9ad74e1e0a2357a7bf42da65cfd03f22146171")]
 [assembly: System.Reflection.AssemblyProductAttribute("Zurvan.DataBase")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Zurvan.DataBase")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

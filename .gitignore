@@ -5,4 +5,14 @@
 
 .vs/Zurvan/v17/
 
+.vs
+
+Zurvan/bin
+
+Zurvan.Core/bin
+
+Zurvan.Core/obj
+
+Zurvan/obj
+
 *.bin

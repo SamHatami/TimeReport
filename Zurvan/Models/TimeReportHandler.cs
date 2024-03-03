@@ -1,8 +1,15 @@
-﻿namespace Zurvan.ClientApp.Models
+﻿using Zurvan.Core.Interfaces;
+using Zurvan.DataBase;
+
+namespace Zurvan.ClientApp.Models
 {
-    internal class TimeReportHandler
+    public class TimeReportHandler
     {
+        private IDataBaseService _dataBaseService;
         public TimeReportHandler()
-        { }
+        {
+            _dataBaseService = new SQLiteService();
+            
+        }
     }
 }
