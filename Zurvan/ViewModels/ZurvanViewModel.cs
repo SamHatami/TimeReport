@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿
 using Caliburn.Micro;
+using Zurvan.ClientApp.Views;
 using Zurvan.Core.Interfaces;
 using Zurvan.DataBase;
 
 namespace Zurvan.ClientApp.ViewModels
 {
-    public class ZurvanViewModel:PropertyChangedBase
+    public class ZurvanViewModel: Conductor<object>
     {
         private IDataBaseService _dataBaseService;
         private string email;
@@ -70,8 +66,8 @@ namespace Zurvan.ClientApp.ViewModels
                 return;
             }
 
-            if (_dataBaseService.Login(email.Replace(" ",""), Password.Replace(" ", "")));
-                //load userviewmodel(thatUser)
+            if (_dataBaseService.Login(email.Replace(" ",""), Password.Replace(" ", "")))
+                ActivateItemAsync(new UserView());
 
         }
 

@@ -34,9 +34,34 @@ namespace Zurvan.DataBase
             throw new NotImplementedException();
         }
 
-        public bool Login(string name, string password)
+        public bool Login(string email, string password)
         {
-            return true;
+            var sqlRequestUsers = "SELECT * FROM Users WHERE Password = @Password AND Email = @Email" ;
+            var users = new List<IUser>();
+
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sqlRequestUsers, connection))
+                {
+                    command.Parameters.AddWithValue("@Email", email);
+                    command.Parameters.AddWithValue("@Password", password);
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.Read())
+                        {
+                            int id = dataReader.GetInt16(dataReader.GetOrdinal("UserID"));
+                            var user = new UserCreator().NewUser(GetUserType(id));
+                            user.UserId = id;
+                            user.FirstName = dataReader.GetString(dataReader.GetOrdinal("FirstName"));
+                            user.LastName = dataReader.GetString(dataReader.GetOrdinal("LastName"));
+
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
         }
 
         public List<IUser> GetAllUsers()

@@ -7,10 +7,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="ViewModels\AdminView.xaml.cs">
+    <Compile Update="Views\AdminView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ViewModels\UserView.xaml.cs">
+    <Compile Update="Views\UserView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\ZurvanView.xaml.cs">
@@ -18,10 +18,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="ViewModels\AdminView.xaml">
+    <Page Update="StyleDictionart.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="ViewModels\UserView.xaml">
+    <Page Update="Views\AdminView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ZurvanView.xaml">
