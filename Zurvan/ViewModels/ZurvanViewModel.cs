@@ -66,9 +66,15 @@ namespace Zurvan.ClientApp.ViewModels
                 return;
             }
 
-            if (_dataBaseService.Login(email.Replace(" ",""), Password.Replace(" ", "")))
-                ActivateItemAsync(new UserView());
+            if (_dataBaseService.Login(email.Replace(" ", ""), Password.Replace(" ", "")))
+                LoadUserView();
 
+        }
+
+        private async Task LoadUserView()
+        {
+            var viewmodel = IoC.Get<UserViewModel>();
+            await ActivateItemAsync(viewmodel, new CancellationToken());
         }
 
         private bool EmailIsOk()
