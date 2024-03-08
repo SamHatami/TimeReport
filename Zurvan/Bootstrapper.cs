@@ -15,7 +15,7 @@ namespace Zurvan.ClientApp
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewForAsync<ZurvanViewModel>();
+            DisplayRootViewForAsync<ShellViewModel>();
         }
     }
 }

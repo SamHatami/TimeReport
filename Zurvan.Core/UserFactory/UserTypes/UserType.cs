@@ -5,6 +5,7 @@
         Employee,
         Lead,
         Manager,
-        Administrator
+        Administrator,
+        Empty
     }
 }

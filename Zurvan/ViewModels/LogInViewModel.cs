@@ -1,4 +1,4 @@
-﻿
+﻿using System.Runtime.CompilerServices;
 using Caliburn.Micro;
 using Zurvan.ClientApp.Views;
 using Zurvan.Core.Interfaces;
@@ -6,9 +6,10 @@ using Zurvan.DataBase;
 
 namespace Zurvan.ClientApp.ViewModels
 {
-    public class ZurvanViewModel: Conductor<object>
+    public class LogInViewModel : Screen
     {
         private IDataBaseService _dataBaseService;
+        private ShellViewModel _shellViewModel;
         private string email;
         private string message;
 
@@ -24,7 +25,7 @@ namespace Zurvan.ClientApp.ViewModels
 
         public string Email
         {
-            get { return email;}
+            get { return email; }
             set
             {
                 email = value;
@@ -43,9 +44,10 @@ namespace Zurvan.ClientApp.ViewModels
         }
 
 
-        public ZurvanViewModel()
+        public LogInViewModel(IDataBaseService dataBaseService, ShellViewModel ShellViewModel)
         {
-            _dataBaseService = new SQLiteService();
+            _dataBaseService = dataBaseService;
+            _shellViewModel = ShellViewModel;
         }
 
         public void Login()
@@ -55,27 +57,24 @@ namespace Zurvan.ClientApp.ViewModels
             {
                 //set message to fill in all
                 Message = "Please fill in email and password";
-                return;
+                return ;
             }
             if (!EmailIsOk())
-                return;
-            
+                return ;
+
             else if (string.IsNullOrEmpty(Password))
             {
                 Message = "Please enter a password";
-                return;
+                return ;
             }
 
-            if (_dataBaseService.Login(email.Replace(" ", ""), Password.Replace(" ", "")))
-                LoadUserView();
+            IUser? user = _dataBaseService.Login(email.Replace(" ", ""), Password.Replace(" ", ""));
+            if (user != null )
+                _shellViewModel.ActivateUserView(user.UserId); // ska nog skicka något till shellview istället för att anropa en metod.
 
+     
         }
 
-        private async Task LoadUserView()
-        {
-            var viewmodel = IoC.Get<UserViewModel>();
-            await ActivateItemAsync(viewmodel, new CancellationToken());
-        }
 
         private bool EmailIsOk()
         {
@@ -84,8 +83,8 @@ namespace Zurvan.ClientApp.ViewModels
                 Message = "Please fill in email";
                 return false;
             }
-            
-            if(!email.Contains('@'))
+
+            if (!email.Contains('@'))
             {
                 Message = "Email in wrong format";
                 return false;

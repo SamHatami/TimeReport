@@ -2,9 +2,9 @@
 
 namespace Zurvan.ClientApp.Views
 {
-    public partial class ZurvanView : Window
+    public partial class ShellView : Window
     {
-        public ZurvanView()
+        public ShellView()
         {
             InitializeComponent();
         }

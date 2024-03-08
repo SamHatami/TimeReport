@@ -16,3 +16,11 @@ Zurvan.Core/obj
 Zurvan/obj
 
 *.bin
+
+Zurvan.DataBase/bin/
+
+Zurvan.DataBase/obj/
+
+Zurvan.Test/obj/
+
+Zurvan.Test/bin/

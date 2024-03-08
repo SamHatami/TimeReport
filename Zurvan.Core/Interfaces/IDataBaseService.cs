@@ -12,6 +12,6 @@
 
         List<IProject> GetUserProjects(int userID);
 
-        bool Login(string name, string password);
+        IUser? Login(string name, string password);
     }
 }

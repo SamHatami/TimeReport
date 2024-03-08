@@ -34,10 +34,9 @@ namespace Zurvan.DataBase
             throw new NotImplementedException();
         }
 
-        public bool Login(string email, string password)
+        public IUser? Login(string email, string password)
         {
             var sqlRequestUsers = "SELECT * FROM Users WHERE Password = @Password AND Email = @Email" ;
-            var users = new List<IUser>();
 
             using (SQLiteConnection connection = new SQLiteConnection(database))
             {
@@ -55,12 +54,13 @@ namespace Zurvan.DataBase
                             user.UserId = id;
                             user.FirstName = dataReader.GetString(dataReader.GetOrdinal("FirstName"));
                             user.LastName = dataReader.GetString(dataReader.GetOrdinal("LastName"));
+                            user.Email = dataReader.GetString(dataReader.GetOrdinal("Email"));
 
-                            return true;
+                            return user;
                         }
                     }
                 }
-                return false;
+                return null;
             }
         }
 
@@ -83,6 +83,7 @@ namespace Zurvan.DataBase
                             user.UserId = id;
                             user.FirstName = dataReader.GetString(dataReader.GetOrdinal("FirstName"));
                             user.LastName = dataReader.GetString(dataReader.GetOrdinal("LastName"));
+                            user.Email = dataReader.GetString(dataReader.GetOrdinal("Email"));
 
                             users.Add(user);
                         }

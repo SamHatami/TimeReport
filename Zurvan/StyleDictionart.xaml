@@ -4,6 +4,7 @@
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF569DE5" />
     <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5" />
     <SolidColorBrush x:Key="TextBox.Static.Background" Color="LightBlue" />
+    <SolidColorBrush x:Key="TextBox.Static.Foreground" Color="Black" />
 
     <SolidColorBrush x:Key="Button.Static.Foreground" Color="White" />
     <SolidColorBrush x:Key="Button.Static.Background" Color="DodgerBlue" />
@@ -148,7 +149,7 @@
     <Style x:Key="TextBoxStyle1" TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource TextBox.Static.Background}" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}" />
-        <Setter Property="Foreground" Value="{StaticResource Button.Static.Foreground}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBox.Static.Foreground}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -178,12 +179,15 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="border" Property="Opacity" Value="1" />
+                            <Setter TargetName="border" Property="CornerRadius" Value="4" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.MouseOver.Border}" />
+                            <Setter TargetName="border" Property="CornerRadius" Value="4" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="true">
                             <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.Focus.Border}" />
+                            <Setter TargetName="border" Property="CornerRadius" Value="4" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
