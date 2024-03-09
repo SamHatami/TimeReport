@@ -9,6 +9,8 @@
         int UsedTime { get; set; }
         List<IUser> Members { get; }
 
+        Dictionary<string, int> UserDateTimeReported { get; set; }
+
         int ShowTotalTimeUsed();
     }
 }

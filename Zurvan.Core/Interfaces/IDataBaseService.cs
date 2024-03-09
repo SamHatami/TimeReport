@@ -10,8 +10,10 @@
 
         IProject GetProject(int id);
 
-        List<IProject> GetUserProjects(int userID);
+        List<IProject> GetUserProjects(int userId);
 
         IUser? Login(string name, string password);
+
+        Dictionary<string,int> GetReportedTimePerUser(int projectId, int userId);
     }
 }

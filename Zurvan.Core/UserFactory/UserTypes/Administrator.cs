@@ -10,6 +10,12 @@ namespace Zurvan.Core.UserFactory.UserTypes
         public int UserId { get; set; }
         public UserType Type { get; set; }
 
+        public List<IProject> Projects
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
+
         public void SomethingUniqueToAmin()
         {
             throw new NotImplementedException();

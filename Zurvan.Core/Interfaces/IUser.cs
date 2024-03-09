@@ -8,7 +8,9 @@ namespace Zurvan.Core.Interfaces
         string LastName { get; set; }
         string Email { get; set; }
         int UserId { get; set; }
-
+        
         UserType Type { get; set; }
+
+        List<IProject> Projects { get; set; }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Data.SQLite;
-using System.Net.Sockets;
 using Zurvan.Core.Interfaces;
 using Zurvan.Core.Projects;
 using Zurvan.Core.UserFactory;
@@ -14,7 +13,6 @@ namespace Zurvan.DataBase
 
         public SQLiteService()
         {
-            
         }
 
         public string ConnectToDatabase()
@@ -31,12 +29,38 @@ namespace Zurvan.DataBase
 
         public IUser GetUser(int id)
         {
-            throw new NotImplementedException();
+            var sqlRequestUsers = "SELECT * FROM Users WHERE UserId=" + id;
+
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sqlRequestUsers, connection))
+                {
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.Read())
+                        {
+                            var user = new UserCreator().NewUser(GetUserType(id));
+                            user.UserId = id;
+                            user.FirstName = dataReader.GetString(dataReader.GetOrdinal("FirstName"));
+                            user.LastName = dataReader.GetString(dataReader.GetOrdinal("LastName"));
+                            user.Email = dataReader.GetString(dataReader.GetOrdinal("Email"));
+                            user.Projects = GetUserProjects(id);
+
+                            return user;
+                        }
+                    }
+                }
+
+                Logger.Info("Fetched userid " + id);
+
+                return null;
+            }
         }
 
         public IUser? Login(string email, string password)
         {
-            var sqlRequestUsers = "SELECT * FROM Users WHERE Password = @Password AND Email = @Email" ;
+            var sqlRequestUsers = "SELECT * FROM Users WHERE Password = @Password AND Email = @Email";
 
             using (SQLiteConnection connection = new SQLiteConnection(database))
             {
@@ -91,13 +115,12 @@ namespace Zurvan.DataBase
                 }
                 Logger.Info("Fetched all users.");
                 return users;
-            
             }
         }
 
         public List<int> GetProjectIds(int userId)
         {
-            var sqlRequestProjects = "SELECT ProjectsUsers.ProjectID FROM ProjectsUsers INNER JOIN Users ON Users.UserID = ProjectsUsers.UserID WHERE Users.UserID="+userId;
+            var sqlRequestProjects = "SELECT ProjectsUsers.ProjectID FROM ProjectsUsers INNER JOIN Users ON Users.UserID = ProjectsUsers.UserID WHERE Users.UserID=" + userId;
             List<int> projectIds = new List<int>();
 
             using (SQLiteConnection connection = new SQLiteConnection(database))
@@ -121,7 +144,6 @@ namespace Zurvan.DataBase
 
         //public IUser GetUserByID(int id) // Change this to a open search user?
         //{
-
         //    IUser user =  (GetUserType(id));
         //    string sqlRequestUser = "SELECT * FROM Users WHERE UserID=" + id;
         //    using (SQLiteConnection connection = new SQLiteConnection(database))
@@ -138,7 +160,6 @@ namespace Zurvan.DataBase
         //                    user.FirstName = dataReader.GetString(dataReader.GetOrdinal("FirstName"));
         //                    user.LastName = dataReader.GetString(dataReader.GetOrdinal("LastName"));
 
-                            
         //                }
         //            }
         //        }
@@ -152,6 +173,31 @@ namespace Zurvan.DataBase
             throw new NotImplementedException();
         }
 
+        public Dictionary<string, int> GetReportedTimePerUser(int projectId, int userId)
+        {
+            Dictionary<string, int> ReportedTime = new Dictionary<string, int>();
+
+            string sqlRequest = "Select * from ProjectsUsersDateReports Where ProjectID=" + projectId + " and UserID=" +
+                                userId;
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sqlRequest, connection))
+                {
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            ReportedTime.Add(dataReader.GetString(dataReader.GetOrdinal("Date")),
+                                dataReader.GetInt16(dataReader.GetOrdinal("Time")));
+                        }
+                    }
+                }
+            }
+
+            return ReportedTime;
+        }
+
         public List<IProject> GetUserProjects(int userId)
         {
             List<IProject> projects = new List<IProject>();
@@ -161,7 +207,7 @@ namespace Zurvan.DataBase
                 foreach (int projectId in GetProjectIds(userId))
                 {
                     var sqlRequestUsers = "SELECT * FROM Projects WHERE ProjectID=" + projectId;
-                    
+
                     using (var command = new SQLiteCommand(sqlRequestUsers, connection))
                     {
                         using (var dataReader = command.ExecuteReader())
@@ -220,7 +266,6 @@ namespace Zurvan.DataBase
                         }
                     }
                 }
-
             }
 
             return users;

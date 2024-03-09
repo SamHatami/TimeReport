@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DataContext="{d:DesignInstance Type=viewmodels:UserViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource Main.Background}">
+    <Grid Background="{StaticResource Grid.Background}">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.15*"/>
             <RowDefinition/>
@@ -14,8 +15,12 @@
 
         <DatePicker HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center"/>
 
-        <DataGrid Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <TextBlock HorizontalAlignment="Left" Margin="160,0,0,0" TextWrapping="Wrap" Text="User" VerticalAlignment="Center"/>
+        <DataGrid Grid.Row="1" Style="{StaticResource DataGridStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Hej"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock HorizontalAlignment="Left" Margin="160,0,0,0" TextWrapping="Wrap" Text="{Binding User.FirstName}" VerticalAlignment="Center"/>
 
     </Grid>
 </UserControl>

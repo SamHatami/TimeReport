@@ -29,6 +29,11 @@ namespace Zurvan.ClientApp.ViewModels
             _dataBaseService = dataBaseService;
             User = _dataBaseService.GetUser(userId);
             _projects = new BindableCollection<IProject>(dataBaseService.GetUserProjects(userId));
+
+            foreach (var project in Projects)
+            {
+                project.UserDateTimeReported = _dataBaseService.GetReportedTimePerUser(project.id, userId);
+            }
         }
 
 

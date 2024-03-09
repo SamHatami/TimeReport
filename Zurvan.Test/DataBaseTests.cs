@@ -79,5 +79,25 @@ namespace Zurvan.Test
 
 
         }
+
+        [Fact]
+        public void GetReportedTime()
+        {
+            string connected = dbservice.ConnectToDatabase();
+
+            int userId = 1;
+            int projectId = 10;
+
+            Dictionary<string,int> reportedTime = new Dictionary<string,int>();
+
+            reportedTime = dbservice.GetReportedTimePerUser(projectId, userId);
+
+            reportedTime.Should().NotBeNull();
+
+
+            output.WriteLine("Date: " + reportedTime.ElementAt(0).Key+ " has reported time of " + reportedTime.ElementAt(0).Value );
+            
+
+        }
     }
 }

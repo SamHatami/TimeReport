@@ -6,16 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels"
-    Width="800"
-    Height="450"
     d:DataContext="{d:DesignInstance Type=viewmodels:LogInViewModel}"
-    mc:Ignorable="d">
-    <UserControl.Background>
-        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientStop Color="#FF387A96" />
-            <GradientStop Offset="1" Color="White" />
-        </LinearGradientBrush>
-    </UserControl.Background>
+    d:DesignHeight="450" d:DesignWidth="800"
+    mc:Ignorable="d" Background="{StaticResource Main.Background}">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,12 +31,11 @@
                 Margin="0,0,0,-10"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Content="Zurvan"
-                FontFamily="Technic"
-                FontSize="30"
+                Content="ZURVAN"
+                FontFamily="Papyrus"
+                FontSize="36"
                 FontStretch="Expanded"
-                FontWeight="Bold"
-                Foreground="White" />
+                Foreground="White" FontWeight="Bold" />
             <Label
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -55,7 +47,7 @@
         <Rectangle
             Grid.Row="1"
             Grid.Column="1"
-            Fill="#FF83BFD2"
+            Fill="#FF313734"
             Opacity="0.5"
             RadiusX="10"
             RadiusY="10" />
@@ -67,9 +59,8 @@
             Margin="0,25,0,0"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
-            Background="{x:Null}"
             Style="{DynamicResource TextBoxStyle1}"
-            TextWrapping="WrapWithOverflow" />
+            TextWrapping="WrapWithOverflow"/>
         <TextBox
             x:Name="Password"
             Grid.Row="1"
@@ -80,7 +71,7 @@
             VerticalAlignment="Top"
             HorizontalScrollBarVisibility="Disabled"
             Style="{DynamicResource TextBoxStyle1}"
-            TextWrapping="WrapWithOverflow" />
+            TextWrapping="WrapWithOverflow"/>
         <Button
             Grid.Row="1"
             Grid.Column="1"
