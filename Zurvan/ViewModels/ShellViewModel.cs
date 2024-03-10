@@ -14,7 +14,6 @@ namespace Zurvan.ClientApp.ViewModels
         {
             _dataBaseService = new SQLiteService();
             LogInView();
-            
         }
 
         public void LogInView()

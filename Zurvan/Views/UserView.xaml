@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels"
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewmodels:UserViewModel}"
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource Main.Background}">
-    <Grid Background="{StaticResource Grid.Background}">
+    <Grid Background="{StaticResource Main.Background}">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.15*"/>
             <RowDefinition/>
@@ -15,12 +16,19 @@
 
         <DatePicker HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Center"/>
 
-        <DataGrid Grid.Row="1" Style="{StaticResource DataGridStyle}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Hej"/>
-            </DataGrid.Columns>
-        </DataGrid>
         <TextBlock HorizontalAlignment="Left" Margin="160,0,0,0" TextWrapping="Wrap" Text="{Binding User.FirstName}" VerticalAlignment="Center"/>
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding ProjectViewModels}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Project" Binding="{Binding ProjectName}"/>
+            </DataGrid.Columns>
+            <DataGrid.ItemTemplate>
+                <DataTemplate >
+                    <ContentControl  cal:View.Model ="{Binding}"/>
+                </DataTemplate>
+            </DataGrid.ItemTemplate>
+
+        </DataGrid>
 
     </Grid>
 </UserControl>
