@@ -33,14 +33,25 @@
             x:Name="TimeReport"
             Grid.Row="1"
             AutoGenerateColumns="False"
-            ItemsSource="{Binding Projects}">
+            ItemsSource="{Binding Projects}"
+            CanUserReorderColumns="False"
+            CanUserAddRows="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False"
+            CanUserDeleteRows="False"
+            Style="{StaticResource DataGridStyle}"
+            SelectionMode="Single"
+            HeadersVisibility="Column"
+            ColumnHeaderStyle="{StaticResource DataGridHeader}">
             <DataGrid.Columns>
+
                 <DataGridTextColumn
                     MinWidth="150"
                     Binding="{Binding Name}"
                     CanUserResize="False"
                     Header="Project"
-                    IsReadOnly="True" />
+                    IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
 

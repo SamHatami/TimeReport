@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System.Windows;
+using Caliburn.Micro;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Zurvan.ClientApp.Views;
@@ -94,7 +95,8 @@ namespace Zurvan.ClientApp.ViewModels
                         {
                             Header = reportedTime.Key,
                             Binding = new Binding(nameof(project.UserDateTimeReported) + "[" + reportedTime.Key + "]"),
-                            IsReadOnly = false
+                            IsReadOnly = false,
+                            Width = 100
                         };
 
                         userView.TimeReport.Columns.Add(column);

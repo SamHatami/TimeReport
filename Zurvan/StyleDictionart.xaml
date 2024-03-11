@@ -25,6 +25,7 @@
     <SolidColorBrush x:Key="UI.Foreground" Color="#FF383838" />
 
 
+
     <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -142,6 +143,21 @@
     <Style x:Key="DataGridStyle" BasedOn="{StaticResource {x:Type DataGrid}}" TargetType="{x:Type DataGrid}">
         <Setter Property="Background" Value="{StaticResource Main.Background}" />
         <Setter Property="Height" Value="auto" />
+        <Setter Property="RowHeight" Value="20"/>
+    </Style>
+
+    <Style x:Key="DataGridHeader" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Background" Value="{StaticResource UI.Background}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource UI.Foreground}"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Height" Value="25"></Setter>
+    </Style>
+
+    <Style x:Key="DataGridHeaderPresenter" TargetType="{x:Type DataGridColumnHeadersPresenter}" >
+        <Setter Property="Background" Value="{StaticResource UI.Background}"/>
+
+
     </Style>
 
     <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
