@@ -1,4 +1,7 @@
 ﻿using Caliburn.Micro;
+using System.Windows.Controls;
+using System.Windows.Data;
+using Zurvan.ClientApp.Views;
 using Zurvan.Core.Interfaces;
 using Zurvan.Core.TimeModels;
 
@@ -25,6 +28,10 @@ namespace Zurvan.ClientApp.ViewModels
             }
         }
 
+        public List<string> SelectedDates;
+
+        public BindableCollection<DateTimeData> DateTimeData { get; set; }
+
         public UserViewModel(IDataBaseService dataBaseService, int userId)
         {
             _dataBaseService = dataBaseService;
@@ -37,13 +44,13 @@ namespace Zurvan.ClientApp.ViewModels
                 project.UserDateTimeReported = _dataBaseService.GetReportedTimePerUser(project.id, userId);
             }
 
-            List<string> selecteDates = new List<string>()
+            SelectedDates = new List<string>()
             {
-                "2024-01-02", "2024-01-01","2024-01-03","2024-01-04","2024-01-05"
+                "2024-01-02", "2024-01-01", "2024-01-03", "2024-01-04", "2024-01-05"
             };
 
-            SortDate(selecteDates);
-            Update(selecteDates);
+            SortDate(SelectedDates);
+            //Update(selecteDates);
         }
 
         public void SortDate(List<string> SelectedDates)
@@ -63,9 +70,43 @@ namespace Zurvan.ClientApp.ViewModels
                     project.UserDateTimeReported.TryGetValue(date, out hours);
                     TimeReportedAtSelectedDates.Add(new DateTimeData(date, hours));
                 }
+
                 UserProjectViewModel pvm = new UserProjectViewModel(project.Name, TimeReportedAtSelectedDates);
                 ProjectViewModels.Add(pvm);
             }
+        }
+
+        protected override void OnViewAttached(object view, object context)
+        {
+            base.OnViewAttached(view, context);
+
+            if (view is not UserView userView)
+                return;
+
+            // Building up columns
+            foreach (var project in Projects)
+            {
+                foreach (var reportedTime in project.UserDateTimeReported)
+                {
+                    if (SelectedDates.Contains(reportedTime.Key))
+                    {
+                        var column = new DataGridTextColumn()
+                        {
+                            Header = reportedTime.Key,
+                            Binding = new Binding(nameof(project.UserDateTimeReported) + "[" + reportedTime.Key + "]"),
+                            IsReadOnly = false
+                        };
+
+                        userView.TimeReport.Columns.Add(column);
+                    }
+                }
+
+            }
+        }
+
+        private void UpdateColumns()
+        {
+
         }
     }
 }
