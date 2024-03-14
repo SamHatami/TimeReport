@@ -1,4 +1,5 @@
 ﻿using Zurvan.Core.Interfaces;
+using Zurvan.Core.TimeModels;
 
 namespace Zurvan.Core.Projects
 {
@@ -10,8 +11,8 @@ namespace Zurvan.Core.Projects
         public int AllocatedTime { get; set; }
         public int UsedTime { get; set; }
         public List<IUser> Members { get; }
-        public Dictionary<string, int> UserDateTimeReported {get;set;}
-
+        public List<DateTimeData> UserDateTimeReported {get;set;}
+            
         public int ShowTotalTimeUsed()
         {
             throw new NotImplementedException();

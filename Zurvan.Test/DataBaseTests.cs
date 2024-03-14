@@ -2,6 +2,7 @@ using System.Data.SQLite;
 using FluentAssertions;
 using Xunit.Abstractions;
 using Zurvan.Core.Interfaces;
+using Zurvan.Core.TimeModels;
 using Zurvan.Core.UserFactory.UserTypes;
 using Zurvan.DataBase;
 namespace Zurvan.Test
@@ -88,14 +89,12 @@ namespace Zurvan.Test
             int userId = 1;
             int projectId = 10;
 
-            Dictionary<string,int> reportedTime = new Dictionary<string,int>();
-
-            reportedTime = dbservice.GetReportedTimePerUser(projectId, userId);
+            List<DateTimeData>reportedTime = dbservice.GetReportedTimePerUser(projectId, userId);
 
             reportedTime.Should().NotBeNull();
 
 
-            output.WriteLine("Date: " + reportedTime.ElementAt(0).Key+ " has reported time of " + reportedTime.ElementAt(0).Value );
+            output.WriteLine("Date: " + reportedTime.ElementAt(0).Date + " has reported time of " + reportedTime.ElementAt(0).TimeUsed );
             
 
         }

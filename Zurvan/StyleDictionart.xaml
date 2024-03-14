@@ -1,5 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FF999999" />
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF569DE5" />
@@ -23,6 +22,7 @@
     <SolidColorBrush x:Key="UI.Background" Color="White" />
     <SolidColorBrush x:Key="UI.Label.Green" Color="#5d9c5a" />
     <SolidColorBrush x:Key="UI.Foreground" Color="#FF383838" />
+    <SolidColorBrush x:Key="DataGrid.Background" Color="#FF838383" />
 
 
 
@@ -50,9 +50,9 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
-        <Setter Property="Height" Value="30"></Setter>
+        <Setter Property="Height" Value="30" />
         <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -93,7 +93,10 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="TextBoxStyle1" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Style
+        x:Key="TextBoxStyle1"
+        BasedOn="{StaticResource {x:Type TextBox}}"
+        TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}" />
         <Setter Property="Foreground" Value="{StaticResource UI.Foreground}" />
@@ -106,59 +109,76 @@
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Height" Value="25" />
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border Background="{TemplateBinding Background}" 
-                            x:Name="border" BorderBrush="LightSlateGray"
-                            BorderThickness="0,0,0,1" >
-                        <ScrollViewer x:Name="PART_ContentHost"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="LightSlateGray"
+                        BorderThickness="0,0,0,1">
+                        <ScrollViewer x:Name="PART_ContentHost" />
+                    </Border>
+                    <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="border"/>
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                         <Trigger Property="Width" Value="Auto">
-                            <Setter Property="MinWidth" Value="100"/>
+                            <Setter Property="MinWidth" Value="100" />
                         </Trigger>
                         <Trigger Property="Height" Value="Auto">
-                            <Setter Property="MinHeight" Value="20"/>
+                            <Setter Property="MinHeight" Value="20" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
 
-           </Setter.Value>
+            </Setter.Value>
         </Setter>
 
 
 
     </Style>
     <Style x:Key="Label" TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{StaticResource UI.Foreground}"></Setter>
+        <Setter Property="Foreground" Value="{StaticResource UI.Foreground}" />
     </Style>
 
-    <Style x:Key="DataGridStyle" BasedOn="{StaticResource {x:Type DataGrid}}" TargetType="{x:Type DataGrid}">
-        <Setter Property="Background" Value="{StaticResource Main.Background}" />
+    <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="BorderThickness" Value="2" />
+    </Style>
+
+
+    <Style
+        x:Key="DataGridStyle"
+        BasedOn="{StaticResource {x:Type DataGrid}}"
+        TargetType="{x:Type DataGrid}">
+        <Setter Property="Background" Value="{StaticResource DataGrid.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource DataGrid.Background}" />
         <Setter Property="Height" Value="auto" />
-        <Setter Property="RowHeight" Value="20"/>
+        <Setter Property="RowHeight" Value="25" />
+        <Setter Property="ColumnWidth" Value="*" />
+        <Setter Property="CellStyle" Value="{StaticResource CellStyle}" />
+        <Setter Property="BorderThickness" Value="0" />
+
     </Style>
 
     <Style x:Key="DataGridHeader" TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background" Value="{StaticResource UI.Background}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource UI.Foreground}"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="Height" Value="25"></Setter>
+        <Setter Property="Background" Value="{StaticResource UI.Background}" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="BorderBrush" Value="{StaticResource UI.Foreground}" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Height" Value="25" />
     </Style>
 
-    <Style x:Key="DataGridHeaderPresenter" TargetType="{x:Type DataGridColumnHeadersPresenter}" >
-        <Setter Property="Background" Value="{StaticResource UI.Background}"/>
-
-
+    <Style x:Key="DataGridHeaderPresenter" TargetType="{x:Type DataGridColumnHeadersPresenter}">
+        <Setter Property="Background" Value="{StaticResource UI.Background}" />
     </Style>
+
+
 
     <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Template">

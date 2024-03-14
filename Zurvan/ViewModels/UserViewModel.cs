@@ -1,10 +1,14 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Net.Mime;
+using System.Windows;
 using Caliburn.Micro;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Zurvan.ClientApp.Views;
 using Zurvan.Core.Interfaces;
 using Zurvan.Core.TimeModels;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace Zurvan.ClientApp.ViewModels
 {
@@ -12,11 +16,11 @@ namespace Zurvan.ClientApp.ViewModels
     {
         private IDataBaseService _dataBaseService;
 
-        public IUser User { get; }
+        public IUser User { get;}
 
         private BindableCollection<IProject> _projects;
 
-        public BindableCollection<UserProjectViewModel> ProjectViewModels { get; }
+        public BindableCollection<UserProjectViewModel> ProjectViewModels { get; set; }
 
         public BindableCollection<IProject> Projects
         {
@@ -26,15 +30,34 @@ namespace Zurvan.ClientApp.ViewModels
             {
                 _projects = value;
                 NotifyOfPropertyChange(() => Projects);
+                Projects.Refresh();
+                SomethingWasChanged();
+            }
+        }
+
+        public BindableCollection<DateTimeData> DateTime { get; set; }
+
+        private string _something;
+        public string Something
+        {
+            get => _something;
+            set
+            {
+                _something = value;
+                NotifyOfPropertyChange(() => Something);
+                SomethingWasChanged();
             }
         }
 
         public List<string> SelectedDates;
 
-        public BindableCollection<DateTimeData> DateTimeData { get; set; }
-
         public UserViewModel(IDataBaseService dataBaseService, int userId)
         {
+            SelectedDates = new List<string>()
+            {
+                "2024-01-02", "2024-01-01", "2024-01-03", "2024-01-04", "2024-01-05"
+            };
+
             _dataBaseService = dataBaseService;
             User = _dataBaseService.GetUser(userId);
             _projects = new BindableCollection<IProject>(dataBaseService.GetUserProjects(userId));
@@ -42,16 +65,13 @@ namespace Zurvan.ClientApp.ViewModels
 
             foreach (var project in Projects)
             {
-                project.UserDateTimeReported = _dataBaseService.GetReportedTimePerUser(project.id, userId);
+                project.UserDateTimeReported = _dataBaseService.GetReportedTimePerUser(project.id, userId, SelectedDates); //detta ska inte viewmodel hantera
             }
 
-            SelectedDates = new List<string>()
-            {
-                "2024-01-02", "2024-01-01", "2024-01-03", "2024-01-04", "2024-01-05"
-            };
+ 
 
             SortDate(SelectedDates);
-            //Update(selecteDates);
+            Update(SelectedDates);
         }
 
         public void SortDate(List<string> SelectedDates)
@@ -59,21 +79,25 @@ namespace Zurvan.ClientApp.ViewModels
             SelectedDates.Sort();
         }
 
+        public void SomethingWasChanged()
+        {
+            MessageBox.Show("Somthing was changed to :" + Something);
+        }
         public void Update(List<string> showDates)
         {
             foreach (var project in Projects)
             {
                 List<DateTimeData> TimeReportedAtSelectedDates = new List<DateTimeData>();
 
-                foreach (string date in showDates)
-                {
-                    int hours;
-                    project.UserDateTimeReported.TryGetValue(date, out hours);
-                    TimeReportedAtSelectedDates.Add(new DateTimeData(date, hours));
-                }
+                //foreach (string date in showDates)
+                //{
+                //    int hours;
+                //    project.UserDateTimeReported.Find();
+                //    TimeReportedAtSelectedDates.Add(new DateTimeData(date, hours));
+                //}
 
-                UserProjectViewModel pvm = new UserProjectViewModel(project.Name, TimeReportedAtSelectedDates);
-                ProjectViewModels.Add(pvm);
+                UserProjectViewModel uwms = new UserProjectViewModel(project.Name, project.UserDateTimeReported);
+                ProjectViewModels.Add(uwms);
             }
         }
 
@@ -81,34 +105,37 @@ namespace Zurvan.ClientApp.ViewModels
         {
             base.OnViewAttached(view, context);
 
-            if (view is not UserView userView)
-                return;
+            //if (view is not UserView userView)
+            //    return;
 
-            // Building up columns
-            foreach (var project in Projects)
-            {
-                foreach (var reportedTime in project.UserDateTimeReported)
-                {
-                    if (SelectedDates.Contains(reportedTime.Key))
-                    {
-                        var column = new DataGridTextColumn()
-                        {
-                            Header = reportedTime.Key,
-                            Binding = new Binding(nameof(project.UserDateTimeReported) + "[" + reportedTime.Key + "]"),
-                            IsReadOnly = false,
-                            Width = 100
-                        };
+            ////Building up columns
+            //foreach (var project in Projects)
+            //{
+            //    foreach (var reportedTime in project.UserDateTimeReported)
+            //    {
+            //            var column = new DataGridTextColumn()
+            //            {
 
-                        userView.TimeReport.Columns.Add(column);
-                    }
-                }
+            //                Header = reportedTime.Date,
+            //                Binding = new Binding(nameof(project.UserDateTimeReported) + "."+ reportedTime.TimeUsed)
+            //                {
+            //                    Mode = BindingMode.TwoWay
+            //                },
+            //                IsReadOnly = false,
+            //                Width = 100,
+            //            };
 
-            }
+            //            userView.TimeReport.Columns.Add(column);
+
+            //    }
+                
+
+            //}
         }
 
-        private void UpdateColumns()
+        public void UpdateDataBase(object t)
         {
-
+            MessageBox.Show(t.ToString());
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Zurvan.Core.Interfaces
+﻿using Zurvan.Core.TimeModels;
+
+namespace Zurvan.Core.Interfaces
 {
     public interface IDataBaseService
     {
@@ -14,6 +16,6 @@
 
         IUser? Login(string name, string password);
 
-        Dictionary<string,int> GetReportedTimePerUser(int projectId, int userId);
+        List<DateTimeData> GetReportedTimePerUser(int projectId, int userId, List<string> selectedDates);
     }
 }

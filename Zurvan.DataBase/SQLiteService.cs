@@ -1,6 +1,7 @@
 ﻿using System.Data.SQLite;
 using Zurvan.Core.Interfaces;
 using Zurvan.Core.Projects;
+using Zurvan.Core.TimeModels;
 using Zurvan.Core.UserFactory;
 
 namespace Zurvan.DataBase
@@ -173,9 +174,9 @@ namespace Zurvan.DataBase
             throw new NotImplementedException();
         }
 
-        public Dictionary<string, int> GetReportedTimePerUser(int projectId, int userId)
+        public List<DateTimeData> GetReportedTimePerUser(int projectId, int userId, List<string> selectedDates)
         {
-            Dictionary<string, int> ReportedTime = new Dictionary<string, int>();
+            List<DateTimeData> TimeData = new List<DateTimeData>();
 
             string sqlRequest = "Select * from ProjectsUsersDateReports Where ProjectID=" + projectId + " and UserID=" +
                                 userId;
@@ -188,15 +189,20 @@ namespace Zurvan.DataBase
                     {
                         while (dataReader.Read())
                         {
-                            ReportedTime.Add(dataReader.GetString(dataReader.GetOrdinal("Date")),
-                                dataReader.GetInt16(dataReader.GetOrdinal("Time")));
+                            DateTimeData dtd = new DateTimeData(dataReader.GetString(dataReader.GetOrdinal("Date")),
+                                dataReader.GetInt16(dataReader.GetOrdinal("Time")), dataReader.GetString(dataReader.GetOrdinal("WeekDay")));
+                            if(selectedDates.Contains(dtd.Date))
+                                TimeData.Add(dtd);
+
                         }
                     }
                 }
             }
 
-            return ReportedTime;
+            return TimeData;
         }
+
+
 
         public List<IProject> GetUserProjects(int userId)
         {

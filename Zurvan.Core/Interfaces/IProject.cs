@@ -1,4 +1,6 @@
-﻿namespace Zurvan.Core.Interfaces
+﻿using Zurvan.Core.TimeModels;
+
+namespace Zurvan.Core.Interfaces
 {
     public interface IProject
     {
@@ -9,7 +11,7 @@
         int UsedTime { get; set; }
         List<IUser> Members { get; }
 
-        Dictionary<string, int> UserDateTimeReported { get; set; }
+        List<DateTimeData> UserDateTimeReported { get; set; }
 
         int ShowTotalTimeUsed();
     }
