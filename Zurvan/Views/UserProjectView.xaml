@@ -1,31 +1,45 @@
-﻿<UserControl x:Class="Zurvan.ClientApp.Views.UserProjectView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Zurvan.ClientApp.Views"
-             xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewmodels:UserProjectViewModel}"
-             mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="800">
+﻿<UserControl
+    x:Class="Zurvan.ClientApp.Views.UserProjectView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Zurvan.ClientApp.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:UserProjectViewModel}"
+    d:DesignHeight="50"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
     <Grid>
-        <StackPanel Orientation="Horizontal" >
-            <StackPanel.Resources>
-                <Style TargetType="{x:Type TextBox}">
-                    <Setter Property="Margin" Value="0,0,10,0"/>
-                </Style>
-            </StackPanel.Resources>
-            <Label Content="{Binding ProjectName}" Width="200"/>
-            <TextBox Text="" Width="40"/>
-            <TextBox Text="" Width="40"/>
-            <TextBox Text="" Width="40"/>
-            <TextBox Text="" Width="40"/>
-            <TextBox Text="" Width="40"/>
+
+        <StackPanel Orientation="Horizontal">
+
+            <Label
+                Width="200"
+                Content="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource Label}" />
+
+            <TextBox
+                Width="40"
+                
+                Text="{Binding Monday, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TimeTextBox}"/>
+            <TextBox
+                Width="40"
+                Text="{Binding Tuesday, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TimeTextBox}"/>
+            <TextBox
+                Width="40"
+                Text="{Binding Wednesday, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TimeTextBox}"/>
+            <TextBox
+                Width="40"
+                Text="{Binding Thursday, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TimeTextBox}"/>
+            <TextBox
+                Width="40"
+                Text="{Binding Friday, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TimeTextBox}"/>
         </StackPanel>
 
     </Grid>
 
 
-   
+
 </UserControl>

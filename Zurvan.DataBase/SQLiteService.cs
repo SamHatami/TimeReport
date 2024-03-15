@@ -1,8 +1,13 @@
-﻿using System.Data.SQLite;
+﻿using Microsoft.VisualBasic;
+using System.Configuration;
+using System.Data.SQLite;
+using System.Windows.Input;
 using Zurvan.Core.Interfaces;
 using Zurvan.Core.Projects;
 using Zurvan.Core.TimeModels;
 using Zurvan.Core.UserFactory;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using String = System.String;
 
 namespace Zurvan.DataBase
 {
@@ -178,10 +183,11 @@ namespace Zurvan.DataBase
         {
             List<DateTimeData> TimeData = new List<DateTimeData>();
 
-            string sqlRequest = "Select * from ProjectsUsersDateReports Where ProjectID=" + projectId + " and UserID=" +
-                                userId;
+            string sqlRequest = "Select DISTINCT * from ProjectsUsersDateReports Where ProjectID="+projectId +" AND UserID=" + userId;
+            DateTime dateValue = new DateTime();
             using (SQLiteConnection connection = new SQLiteConnection(database))
             {
+   
                 connection.Open();
                 using (var command = new SQLiteCommand(sqlRequest, connection))
                 {
@@ -189,17 +195,71 @@ namespace Zurvan.DataBase
                     {
                         while (dataReader.Read())
                         {
-                            DateTimeData dtd = new DateTimeData(dataReader.GetString(dataReader.GetOrdinal("Date")),
-                                dataReader.GetInt16(dataReader.GetOrdinal("Time")), dataReader.GetString(dataReader.GetOrdinal("WeekDay")));
-                            if(selectedDates.Contains(dtd.Date))
-                                TimeData.Add(dtd);
+                            string date = dataReader.GetString(dataReader.GetOrdinal("Date"));
+                            int time = dataReader.GetInt32(dataReader.GetOrdinal("Time"));
+                            dateValue = DateTime.Parse(date);
 
+                            if (selectedDates.Contains(date))
+                            {
+                                DateTimeData dtd = new DateTimeData(date, time, dateValue.DayOfWeek.ToString());
+                                TimeData.Add(dtd);
+                            }
+
+                            int step =dataReader.StepCount;
                         }
+
                     }
                 }
             }
 
             return TimeData;
+        }
+
+        public void UpdateProjectByDateAndUser(int projectId, int userId, string date, int updatedTime)
+        {
+            string sqlRequest;
+
+            if (!CheckIfDateDataExist(projectId, userId, date))
+                sqlRequest = "INSERT INTO ProjectsUsersDateReports (ProjectID, UserID, Date, Time) VALUES (@projectId, @userId, @date, @time)";
+            
+            else
+                sqlRequest = "UPDATE ProjectsUsersDateReports SET Time= @time WHERE ProjectID = @projectId AND UserID= @userId AND Date= @date";
+
+            
+
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sqlRequest, connection))
+                {
+                    command.Parameters.AddWithValue("@date", date);
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.Parameters.AddWithValue("@projectId", projectId);
+                    command.Parameters.AddWithValue("@time", updatedTime);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private bool CheckIfDateDataExist(int projectId, int userId, string date)
+        {
+            int count;
+            string sqlRequest =
+                "SELECT COUNT(*) FROM ProjectsUsersDateReports WHERE ProjectID = @projectId AND UserID = @userId AND Date = @date";
+
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sqlRequest, connection))
+                {
+                    command.Parameters.AddWithValue("@projectId", projectId);
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.Parameters.AddWithValue("@date", date); // Assuming date is of type DateTime
+                    count = Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+
+            return count > 0;
         }
 
 
@@ -235,7 +295,7 @@ namespace Zurvan.DataBase
         public string GetUserType(int userId)
         {
             var sqlRequestUsers = "SELECT UsersTypes.Type FROM UsersTypes JOIN Users ON Users.UserID = UsersTypes.UserID";
-            string userType = String.Empty;
+            string userType ="";
 
             using (SQLiteConnection connection = new SQLiteConnection(database))
             {

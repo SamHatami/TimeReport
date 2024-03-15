@@ -22,6 +22,9 @@ namespace Zurvan.ClientApp.Views.Converters
 
                 return dateTime.Single(x => x.WeekDay == weekday).TimeUsed;
 
+                //DateTimeData dateTime = (DateTimeData)value;
+
+                //return dateTime.TimeUsed;
             }
             catch (Exception e)
             {
@@ -33,7 +36,7 @@ namespace Zurvan.ClientApp.Views.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
 }

@@ -9,6 +9,7 @@ using Zurvan.Core.Interfaces;
 using Zurvan.Core.TimeModels;
 using System.Xml.Linq;
 using System.Linq;
+using Zurvan.Core.Projects;
 
 namespace Zurvan.ClientApp.ViewModels
 {
@@ -34,6 +35,7 @@ namespace Zurvan.ClientApp.ViewModels
                 SomethingWasChanged();
             }
         }
+        
 
         public BindableCollection<DateTimeData> DateTime { get; set; }
 
@@ -62,14 +64,8 @@ namespace Zurvan.ClientApp.ViewModels
             User = _dataBaseService.GetUser(userId);
             _projects = new BindableCollection<IProject>(dataBaseService.GetUserProjects(userId));
             ProjectViewModels = new BindableCollection<UserProjectViewModel>();
-
-            foreach (var project in Projects)
-            {
-                project.UserDateTimeReported = _dataBaseService.GetReportedTimePerUser(project.id, userId, SelectedDates); //detta ska inte viewmodel hantera
-            }
-
- 
-
+            
+            
             SortDate(SelectedDates);
             Update(SelectedDates);
         }
@@ -87,55 +83,18 @@ namespace Zurvan.ClientApp.ViewModels
         {
             foreach (var project in Projects)
             {
-                List<DateTimeData> TimeReportedAtSelectedDates = new List<DateTimeData>();
+                List<DateTimeData> timeReportedAtSelectedDates = new List<DateTimeData>();
 
-                //foreach (string date in showDates)
-                //{
-                //    int hours;
-                //    project.UserDateTimeReported.Find();
-                //    TimeReportedAtSelectedDates.Add(new DateTimeData(date, hours));
-                //}
-
-                UserProjectViewModel uwms = new UserProjectViewModel(project.Name, project.UserDateTimeReported);
+                UserProjectViewModel uwms = new UserProjectViewModel(project, SelectedDates, _dataBaseService, User.UserId);
                 ProjectViewModels.Add(uwms);
             }
         }
 
-        protected override void OnViewAttached(object view, object context)
+        public void LogOut()
         {
-            base.OnViewAttached(view, context);
-
-            //if (view is not UserView userView)
-            //    return;
-
-            ////Building up columns
-            //foreach (var project in Projects)
-            //{
-            //    foreach (var reportedTime in project.UserDateTimeReported)
-            //    {
-            //            var column = new DataGridTextColumn()
-            //            {
-
-            //                Header = reportedTime.Date,
-            //                Binding = new Binding(nameof(project.UserDateTimeReported) + "."+ reportedTime.TimeUsed)
-            //                {
-            //                    Mode = BindingMode.TwoWay
-            //                },
-            //                IsReadOnly = false,
-            //                Width = 100,
-            //            };
-
-            //            userView.TimeReport.Columns.Add(column);
-
-            //    }
-                
-
-            //}
+           
+            
         }
 
-        public void UpdateDataBase(object t)
-        {
-            MessageBox.Show(t.ToString());
-        }
     }
 }

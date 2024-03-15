@@ -4,10 +4,11 @@
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF569DE5" />
     <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5" />
     <SolidColorBrush x:Key="TextBox.Static.Background" Color="#FF5E8079" />
-    <SolidColorBrush x:Key="TextBox.Static.Foreground" Color="#FFF5F4F2" />
+    <SolidColorBrush x:Key="TextBox.Static.Foreground" Color="#d3ccbe" />
+    <SolidColorBrush x:Key="Label.Primary" Color="#f6cb80" />
 
     <SolidColorBrush x:Key="Button.Static.Foreground" Color="White" />
-    <SolidColorBrush x:Key="Button.Static.Background" Color="#FF826F71" />
+    <SolidColorBrush x:Key="Button.Static.Background" Color="#927a59" />
     <SolidColorBrush x:Key="Button.Static.Border" Color="Transparent" />
 
     <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FF757A74" />
@@ -17,12 +18,18 @@
     <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4" />
     <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5" />
     <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383" />
-    <SolidColorBrush x:Key="Main.Background" Color="#FF282B3D" />
+    <SolidColorBrush x:Key="Main.Background" Color="#636564" />
     <SolidColorBrush x:Key="Grid.Background" Color="#FF313734" />
-    <SolidColorBrush x:Key="UI.Background" Color="White" />
+    <SolidColorBrush x:Key="List.Item.Background" Color="#6d6c68" />
+    <SolidColorBrush x:Key="UI.Background" Color="#242929" />
     <SolidColorBrush x:Key="UI.Label.Green" Color="#5d9c5a" />
     <SolidColorBrush x:Key="UI.Foreground" Color="#FF383838" />
     <SolidColorBrush x:Key="DataGrid.Background" Color="#FF838383" />
+
+    <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3" />
+    <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9" />
 
 
 
@@ -41,7 +48,58 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+
+    <Style x:Key="ListViewStyle" TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{StaticResource ListBox.Static.Background}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ListBox.Static.Border}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+        <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListView}">
+                    <Border
+                        x:Name="Bd"
+                        Padding="1"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{DynamicResource TextBox.Static.Border}"
+                        CornerRadius="5,5,5,5"
+                        SnapsToDevicePixels="true">
+                        <ScrollViewer Padding="{TemplateBinding Padding}" Focusable="false">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource ListBox.Disabled.Background}" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ListBox.Disabled.Border}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true" />
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ListViewItem" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Background" Value="{StaticResource List.Item.Background}" />
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+        </Style.Resources>
+    </Style>
+    <Style x:Key="PrimaryButton" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
         <Setter Property="Background" Value="{StaticResource Button.Static.Background}" />
         <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}" />
@@ -94,12 +152,12 @@
         </Setter>
     </Style>
     <Style
-        x:Key="TextBoxStyle1"
+        x:Key="LoginTextBox"
         BasedOn="{StaticResource {x:Type TextBox}}"
         TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}" />
-        <Setter Property="Foreground" Value="{StaticResource UI.Foreground}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBox.Static.Foreground}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -137,12 +195,59 @@
 
             </Setter.Value>
         </Setter>
-
-
-
     </Style>
+
+    <Style x:Key="TimeTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="#4b4b48" />
+        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}" />
+        <Setter Property="Foreground" Value="{StaticResource TextBox.Static.Foreground}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="AllowDrop" Value="true" />
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{StaticResource UI.Background}"
+                        BorderThickness="0"
+                        CornerRadius="5">
+                        <ScrollViewer x:Name="PART_ContentHost" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                        <Trigger Property="Width" Value="Auto">
+                            <Setter Property="MinWidth" Value="80" />
+                        </Trigger>
+                        <Trigger Property="Height" Value="Auto">
+                            <Setter Property="MinHeight" Value="30" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="Label" TargetType="{x:Type Label}">
-        <Setter Property="Foreground" Value="{StaticResource UI.Foreground}" />
+        <Setter Property="Foreground" Value="{StaticResource Label.Primary}" />
+    </Style>
+
+    <Style x:Key="LabelWhite" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="White" />
     </Style>
 
     <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}">
@@ -151,43 +256,5 @@
         <Setter Property="BorderThickness" Value="2" />
     </Style>
 
-
-    <Style
-        x:Key="DataGridStyle"
-        BasedOn="{StaticResource {x:Type DataGrid}}"
-        TargetType="{x:Type DataGrid}">
-        <Setter Property="Background" Value="{StaticResource DataGrid.Background}" />
-        <Setter Property="BorderBrush" Value="{StaticResource DataGrid.Background}" />
-        <Setter Property="Height" Value="auto" />
-        <Setter Property="RowHeight" Value="25" />
-        <Setter Property="ColumnWidth" Value="*" />
-        <Setter Property="CellStyle" Value="{StaticResource CellStyle}" />
-        <Setter Property="BorderThickness" Value="0" />
-
-    </Style>
-
-    <Style x:Key="DataGridHeader" TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background" Value="{StaticResource UI.Background}" />
-        <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="BorderBrush" Value="{StaticResource UI.Foreground}" />
-        <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="Height" Value="25" />
-    </Style>
-
-    <Style x:Key="DataGridHeaderPresenter" TargetType="{x:Type DataGridColumnHeadersPresenter}">
-        <Setter Property="Background" Value="{StaticResource UI.Background}" />
-    </Style>
-
-
-
-    <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Window}">
-                    <ContentPresenter />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
 </ResourceDictionary>

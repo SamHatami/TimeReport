@@ -6,18 +6,10 @@ using System.Threading.Tasks;
 
 namespace Zurvan.Core.TimeModels
 {
-    public class DateTimeData
+    public class DateTimeData(string date = "", int timeUsed = 0, string weekDay = "")
     {
-        public string Date { get; set; }
-        public string WeekDay { get; set; }
-        public int TimeUsed { get; set; }
-
-        public DateTimeData(string date, int timeUsed, string weekDay)
-        {
-            Date = date;
-            TimeUsed = timeUsed;
-            WeekDay = weekDay;
-        }
-
+        public string Date { get; set; } = date;
+        public string WeekDay { get; set; } = weekDay;
+        public int TimeUsed { get; set; } = timeUsed;
     }
 }

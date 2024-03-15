@@ -17,5 +17,7 @@ namespace Zurvan.Core.Interfaces
         IUser? Login(string name, string password);
 
         List<DateTimeData> GetReportedTimePerUser(int projectId, int userId, List<string> selectedDates);
+
+        void UpdateProjectByDateAndUser(int projectId, int userId, string date, int updatedTime);
     }
 }
