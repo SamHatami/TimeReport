@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Zurvan.Core.TimeModels
 {
-    public class DateTimeData(string date = "", int timeUsed = 0, string weekDay = "")
+    public class HourReportData(string date = "", int timeUsed = 0, string weekDay = "")
     {
         public string Date { get; set; } = date;
         public string WeekDay { get; set; } = weekDay;

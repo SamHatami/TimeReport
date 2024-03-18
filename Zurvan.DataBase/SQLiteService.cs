@@ -179,9 +179,9 @@ namespace Zurvan.DataBase
             throw new NotImplementedException();
         }
 
-        public List<DateTimeData> GetReportedTimePerUser(int projectId, int userId, List<string> selectedDates)
+        public List<HourReportData> GetReportedTimePerUser(int projectId, int userId, List<string> selectedDates)
         {
-            List<DateTimeData> TimeData = new List<DateTimeData>();
+            List<HourReportData> TimeData = new List<HourReportData>();
 
             string sqlRequest = "Select DISTINCT * from ProjectsUsersDateReports Where ProjectID="+projectId +" AND UserID=" + userId;
             DateTime dateValue = new DateTime();
@@ -201,7 +201,7 @@ namespace Zurvan.DataBase
 
                             if (selectedDates.Contains(date))
                             {
-                                DateTimeData dtd = new DateTimeData(date, time, dateValue.DayOfWeek.ToString());
+                                HourReportData dtd = new HourReportData(date, time, dateValue.DayOfWeek.ToString());
                                 TimeData.Add(dtd);
                             }
 

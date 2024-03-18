@@ -18,7 +18,7 @@ namespace Zurvan.ClientApp.Views.Converters
             {
                 string weekday = (string)parameter;
 
-                List<DateTimeData> dateTime = (List<DateTimeData>)value;
+                List<HourReportData> dateTime = (List<HourReportData>)value;
 
                 return dateTime.Single(x => x.WeekDay == weekday).TimeUsed;
 

@@ -6,109 +6,140 @@
     xmlns:converters="clr-namespace:Zurvan.ClientApp.Views.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
     xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:UserViewModel}"
     d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignWidth="1200"
     Background="{StaticResource Main.Background}"
     mc:Ignorable="d">
 
     <UserControl.Resources>
         <converters:ProjectViewConverter x:Key="ProjectViewConverter" />
         <converters:UserTimeConverter x:Key="TImeConverter" />
+        
     </UserControl.Resources>
-    <Grid Margin="5" Background="{StaticResource Main.Background}">
+    <Grid
+        x:Name="MainGrid"
+        Margin="5"
+        Background="{StaticResource Main.Background}">
 
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="30" />
+            <ColumnDefinition Width="Auto" MinWidth="800" />
+            <ColumnDefinition Width="*" MinWidth="30" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.15*" />
             <RowDefinition Height="50" />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="150" />
         </Grid.RowDefinitions>
 
         <TextBox
             Grid.Row="0"
+            Grid.Column="1"
             Margin="160,0,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Text="{Binding User.FirstName, Mode=TwoWay}"
             TextWrapping="Wrap" />
 
-        <Border
+
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource UI.Background}" />
+        <Rectangle Grid.Row="1" Grid.Column="1" RadiusX="10" RadiusY="10" Stroke="#4b4b48" StrokeThickness="5" Margin="-5"/>
+
+
+
+        <DataGrid
             Grid.Row="1"
-            Margin="3"
-            Background="{StaticResource UI.Background}"
-            BorderBrush="{StaticResource UI.Background}"
-            BorderThickness="0"
-            CornerRadius="5" />
-        <StackPanel
-            Grid.Row="1"
-            Margin="5"
-            VerticalAlignment="Center"
-            Orientation="Horizontal">
-            <Label
-                Width="205"
-                Content="PROJECT"
-                Style="{StaticResource Label}" />
-            <Label
-                Width="55"
-                Content="MON"
-                Style="{StaticResource Label}" />
-            <Label
-                Width="50"
-                Content="TUE"
-                Style="{StaticResource Label}" />
-            <Label
-                Width="50"
-                Content="WEN"
-                Style="{StaticResource Label}" />
-            <Label
-                Width="50"
-                Content="THU"
-                Style="{StaticResource Label}" />
-            <Label
-                Width="50"
-                Content="FRI"
-                Style="{StaticResource Label}" />
+            Grid.Column="1"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            CanUserResizeRows="False"
+            CanUserSortColumns="False"
+            ItemsSource="{Binding ProjectViewModels}"
+            SelectedItem="key"
+            SelectionMode="Single"
+            HeadersVisibility="Column"
+            Template="{DynamicResource DataGridTemplate1}" Background="{x:Null}">
 
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="300"
+                    Binding="{Binding ProjectName}"
+                    Header="Project"
+                    HeaderStyle="{DynamicResource DataGridHeaderTransparentLeft}" />
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                    <DataGridTemplateColumn.Header>
+                        <Label Content="Monday" Style="{StaticResource Label}" />
 
-        </StackPanel>
-
-
-
-        <ListView
-            x:Name="TimeReport"
-            Grid.Row="2"
-            Background="Transparent"
-            ItemsSource="{Binding ProjectViewModels, Mode=TwoWay}"
-            SelectionMode="Extended"
-            Style="{DynamicResource ListViewStyle}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="Margin" Value="2" />
-                    <Setter Property="Padding" Value="5" />
-                    <Setter Property="Background" Value="{StaticResource List.Item.Background}" />
-                    <Style.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5" />
-                        </Style>
-                    </Style.Resources>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ContentControl cal:View.Model="{Binding}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-        </ListView>
-
-
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox
+                                Width="40"
+                                Style="{StaticResource TimeTextBox}"
+                                Text="{Binding Monday, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                    <DataGridTemplateColumn.Header>
+                        <Label Content="Tuesday" Style="{StaticResource Label}" />
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox
+                                Width="40"
+                                Style="{StaticResource TimeTextBox}"
+                                Text="{Binding Tuesday, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                    <DataGridTemplateColumn.Header>
+                        <Label Content="Wednesday" Style="{StaticResource Label}" />
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox
+                                Width="40"
+                                Style="{StaticResource TimeTextBox}"
+                                Text="{Binding Wednesday, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                    <DataGridTemplateColumn.Header>
+                        <Label Content="Thursday" Style="{StaticResource Label}" />
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox
+                                Width="40"
+                                Style="{StaticResource TimeTextBox}"
+                                Text="{Binding Thursday, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                    <DataGridTemplateColumn.Header>
+                        <Label Content="Friday" Style="{StaticResource Label}" />
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox
+                                Width="40"
+                                Style="{StaticResource TimeTextBox}"
+                                Text="{Binding Friday, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </UserControl>

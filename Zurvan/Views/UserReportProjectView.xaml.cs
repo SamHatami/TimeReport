@@ -5,9 +5,9 @@ namespace Zurvan.ClientApp.Views
     /// <summary>
     /// Interaction logic for ProjectTimeView.xaml
     /// </summary>
-    public partial class UserProjectView : UserControl
+    public partial class UserReportProjectView : UserControl
     {
-        public UserProjectView()
+        public UserReportProjectView()
         {
             InitializeComponent();
         }

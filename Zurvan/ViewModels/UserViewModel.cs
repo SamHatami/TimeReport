@@ -21,7 +21,15 @@ namespace Zurvan.ClientApp.ViewModels
 
         private BindableCollection<IProject> _projects;
 
-        public BindableCollection<UserProjectViewModel> ProjectViewModels { get; set; }
+        private BindableCollection<UserReportProjectViewModel> _projectViewModels;
+        public BindableCollection<UserReportProjectViewModel> ProjectViewModels 
+        { get => _projectViewModels;
+            set
+            {
+                _projectViewModels = value;
+                NotifyOfPropertyChange(() => ProjectViewModels);
+            }
+        }
 
         public BindableCollection<IProject> Projects
         {
@@ -37,7 +45,7 @@ namespace Zurvan.ClientApp.ViewModels
         }
         
 
-        public BindableCollection<DateTimeData> DateTime { get; set; }
+        public BindableCollection<HourReportData> DateTime { get; set; }
 
         private string _something;
         public string Something
@@ -63,8 +71,12 @@ namespace Zurvan.ClientApp.ViewModels
             _dataBaseService = dataBaseService;
             User = _dataBaseService.GetUser(userId);
             _projects = new BindableCollection<IProject>(dataBaseService.GetUserProjects(userId));
-            ProjectViewModels = new BindableCollection<UserProjectViewModel>();
-            
+            _projectViewModels = new BindableCollection<UserReportProjectViewModel>();
+
+            foreach (var project in Projects)
+            {
+                
+            }
             
             SortDate(SelectedDates);
             Update(SelectedDates);
@@ -83,18 +95,19 @@ namespace Zurvan.ClientApp.ViewModels
         {
             foreach (var project in Projects)
             {
-                List<DateTimeData> timeReportedAtSelectedDates = new List<DateTimeData>();
+                List<HourReportData> timeReportedAtSelectedDates = new List<HourReportData>();
 
-                UserProjectViewModel uwms = new UserProjectViewModel(project, SelectedDates, _dataBaseService, User.UserId);
-                ProjectViewModels.Add(uwms);
+                UserReportProjectViewModel uwms = new UserReportProjectViewModel(project, SelectedDates, _dataBaseService, User.UserId);
+                _projectViewModels.Add(uwms);
+     
             }
         }
 
         public void LogOut()
         {
-           
             
         }
+
 
     }
 }

@@ -11,7 +11,7 @@ namespace Zurvan.Core.Interfaces
         int UsedTime { get; set; }
         List<IUser> Members { get; }
 
-        List<DateTimeData> UserDateTimeReported { get; set; }
+        List<HourReportData> UserReportedData { get; set; }
 
         int ShowTotalTimeUsed();
     }

@@ -16,8 +16,8 @@ namespace Zurvan.ClientApp.Views.Converters
         {
             try
             {
-                var views = new List<UserProjectViewModel>();
-                foreach (UserProjectViewModel pm in views)
+                var views = new List<UserReportProjectViewModel>();
+                foreach (UserReportProjectViewModel pm in views)
                 {
                     return pm;
                 }
@@ -31,7 +31,7 @@ namespace Zurvan.ClientApp.Views.Converters
             return null;
         }
 
-        private void Flatten(UserProjectViewModel vm, List<UserProjectViewModel> flattened)
+        private void Flatten(UserReportProjectViewModel vm, List<UserReportProjectViewModel> flattened)
         {
             flattened.Add(vm);
 

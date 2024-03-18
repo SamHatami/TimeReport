@@ -89,7 +89,7 @@ namespace Zurvan.Test
             int userId = 1;
             int projectId = 10;
 
-            List<DateTimeData>reportedTime = dbservice.GetReportedTimePerUser(projectId, userId);
+            List<HourReportData>reportedTime = dbservice.GetReportedTimePerUser(projectId, userId);
 
             reportedTime.Should().NotBeNull();
 

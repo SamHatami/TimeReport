@@ -10,13 +10,13 @@ using String = System.String;
 
 namespace Zurvan.ClientApp.ViewModels
 {
-    public class UserProjectViewModel : Screen
+    public class UserReportProjectViewModel : Screen
     {
         private List<string> _selectedDates;
 
         private IDataBaseService _database;
 
-        private DateTimeData _monday;
+        private HourReportData _monday;
 
         public int Monday
         {
@@ -29,7 +29,7 @@ namespace Zurvan.ClientApp.ViewModels
             }
         }
 
-        private DateTimeData _tuesday;
+        private HourReportData _tuesday;
 
         public int Tuesday
         {
@@ -42,7 +42,7 @@ namespace Zurvan.ClientApp.ViewModels
             }
         }
 
-        private DateTimeData _wednesday;
+        private HourReportData _wednesday;
 
         public int Wednesday
         {
@@ -55,7 +55,7 @@ namespace Zurvan.ClientApp.ViewModels
             }
         }
 
-        private DateTimeData _thursday;
+        private HourReportData _thursday;
 
         public int Thursday
         {
@@ -68,7 +68,7 @@ namespace Zurvan.ClientApp.ViewModels
             }
         }
 
-        private DateTimeData _friday;
+        private HourReportData _friday;
 
         public int Friday
         {
@@ -82,11 +82,11 @@ namespace Zurvan.ClientApp.ViewModels
         }
 
         private IProject _project;
-        private readonly int _userId;
+        private int _userId;
 
         public string ProjectName { get; set; }
 
-        public UserProjectViewModel(IProject project, List<string> selectedDates, IDataBaseService dataBase, int userId)
+        public UserReportProjectViewModel(IProject project, List<string> selectedDates, IDataBaseService dataBase, int userId)
         {
             _userId = userId;
             _database = dataBase;
@@ -94,45 +94,45 @@ namespace Zurvan.ClientApp.ViewModels
             _selectedDates = selectedDates;
             ProjectName = project.Name;
 
-            project.UserDateTimeReported = _database.GetReportedTimePerUser(project.id, userId, _selectedDates);
+            project.UserReportedData = _database.GetReportedTimePerUser(project.id, userId, _selectedDates);
 
             InitializeWeekDays();
         }
 
         private void InitializeWeekDays()
         {
-            _monday = new DateTimeData();
-            _tuesday = new DateTimeData();
-            _wednesday = new DateTimeData();
-            _thursday = new DateTimeData();
-            _friday = new DateTimeData();
+            _monday = new HourReportData();
+            _tuesday = new HourReportData();
+            _wednesday = new HourReportData();
+            _thursday = new HourReportData();
+            _friday = new HourReportData();
 
             DateTime dateValue;
             foreach (string thisDate in _selectedDates)
             {
                 dateValue = DateTime.Parse(thisDate);
-                int timeUsed = _project.UserDateTimeReported.Where(x => !string.IsNullOrEmpty(x.Date)).Where(x => x.Date == thisDate).Select(x => x.TimeUsed).SingleOrDefault();
+                int timeUsed = _project.UserReportedData.Where(x => !string.IsNullOrEmpty(x.Date)).Where(x => x.Date == thisDate).Select(x => x.TimeUsed).SingleOrDefault();
 
                 switch (dateValue.DayOfWeek.ToString())
                 {
                     case "Monday":
-                        _monday = new DateTimeData(timeUsed: timeUsed, date: thisDate, weekDay: "Monday");
+                        _monday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Monday");
                         break;
 
                     case "Tuesday":
-                        _tuesday = new DateTimeData(timeUsed: timeUsed, date: thisDate, weekDay: "Tuesday");
+                        _tuesday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Tuesday");
                         break;
 
                     case "Wednesday":
-                        _wednesday = new DateTimeData(timeUsed: timeUsed, date: thisDate, weekDay: "Wednesday");
+                        _wednesday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Wednesday");
                         break;
 
                     case "Thursday":
-                        _thursday = new DateTimeData(timeUsed: timeUsed, date: thisDate, weekDay: "Thursday");
+                        _thursday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Thursday");
                         break;
 
                     case "Friday":
-                        _friday = new DateTimeData(timeUsed: timeUsed, date: thisDate, weekDay: "Friday");
+                        _friday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Friday");
                         break;
                 }
             }
@@ -165,7 +165,7 @@ namespace Zurvan.ClientApp.ViewModels
             //}
         }
 
-        public void UpdateDataBase(DateTimeData date)
+        public void UpdateDataBase(HourReportData date)
         {
             _database.UpdateProjectByDateAndUser(_project.id, _userId, date.Date, date.TimeUsed);
         }

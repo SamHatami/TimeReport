@@ -11,7 +11,7 @@ namespace Zurvan.Core.Projects
         public int AllocatedTime { get; set; }
         public int UsedTime { get; set; }
         public List<IUser> Members { get; }
-        public List<DateTimeData> UserDateTimeReported {get;set;}
+        public List<HourReportData> UserReportedData {get;set;}
             
         public int ShowTotalTimeUsed()
         {
