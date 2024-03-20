@@ -81,6 +81,17 @@ namespace Zurvan.ClientApp.ViewModels
             }
         }
 
+  
+        public int ProjectTotal
+        {
+            get => _project.UsedTime;
+            set
+            {
+                NotifyOfPropertyChange(() => Friday);
+                UpdateDataBase();
+            }
+        }
+
         private IProject _project;
         private int _userId;
 
@@ -106,6 +117,7 @@ namespace Zurvan.ClientApp.ViewModels
             _wednesday = new HourReportData();
             _thursday = new HourReportData();
             _friday = new HourReportData();
+            ProjectTotal = _project.UsedTime;
 
             DateTime dateValue;
             foreach (string thisDate in _selectedDates)
@@ -168,6 +180,7 @@ namespace Zurvan.ClientApp.ViewModels
         public void UpdateDataBase(HourReportData date)
         {
             _database.UpdateProjectByDateAndUser(_project.id, _userId, date.Date, date.TimeUsed);
+            
         }
     }
 }

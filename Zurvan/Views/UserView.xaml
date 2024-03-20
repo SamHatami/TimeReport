@@ -64,7 +64,7 @@
             SelectedItem="key"
             SelectionMode="Single"
             HeadersVisibility="Column"
-            Template="{DynamicResource DataGridTemplate1}" Background="{x:Null}">
+            Background="{x:Null}">
 
             <DataGrid.Columns>
                 <DataGridTextColumn
@@ -82,7 +82,7 @@
                             <TextBox
                                 Width="40"
                                 Style="{StaticResource TimeTextBox}"
-                                Text="{Binding Monday, Mode=TwoWay}" />
+                                Text="{Binding Monday, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -95,7 +95,7 @@
                             <TextBox
                                 Width="40"
                                 Style="{StaticResource TimeTextBox}"
-                                Text="{Binding Tuesday, Mode=TwoWay}" />
+                                Text="{Binding Tuesday, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -108,7 +108,7 @@
                             <TextBox
                                 Width="40"
                                 Style="{StaticResource TimeTextBox}"
-                                Text="{Binding Wednesday, Mode=TwoWay}" />
+                                Text="{Binding Wednesday, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -121,7 +121,7 @@
                             <TextBox
                                 Width="40"
                                 Style="{StaticResource TimeTextBox}"
-                                Text="{Binding Thursday, Mode=TwoWay}" />
+                                Text="{Binding Thursday, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -134,9 +134,22 @@
                             <TextBox
                                 Width="40"
                                 Style="{StaticResource TimeTextBox}"
-                                Text="{Binding Friday, Mode=TwoWay}" />
+                                Text="{Binding Friday, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                    <DataGridTemplateColumn.Header>
+                        <Label Content="Project Total"  Style="{StaticResource Label}" />
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <TextBox
+                            Width="40"
+                            Style="{StaticResource TimeTextBox}"
+                            Text="{Binding ProjectTotal, UpdateSourceTrigger=PropertyChanged}" />
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>

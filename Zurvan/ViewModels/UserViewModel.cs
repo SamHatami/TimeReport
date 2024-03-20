@@ -30,32 +30,15 @@ namespace Zurvan.ClientApp.ViewModels
                 NotifyOfPropertyChange(() => ProjectViewModels);
             }
         }
-
-        public BindableCollection<IProject> Projects
-        {
-            get => _projects;
-
-            set
-            {
-                _projects = value;
-                NotifyOfPropertyChange(() => Projects);
-                Projects.Refresh();
-                SomethingWasChanged();
-            }
-        }
         
-
-        public BindableCollection<HourReportData> DateTime { get; set; }
-
-        private string _something;
-        public string Something
+        private int[] _something;
+        public int[] Something
         {
             get => _something;
             set
             {
                 _something = value;
                 NotifyOfPropertyChange(() => Something);
-                SomethingWasChanged();
             }
         }
 
@@ -70,13 +53,8 @@ namespace Zurvan.ClientApp.ViewModels
 
             _dataBaseService = dataBaseService;
             User = _dataBaseService.GetUser(userId);
-            _projects = new BindableCollection<IProject>(dataBaseService.GetUserProjects(userId));
-            _projectViewModels = new BindableCollection<UserReportProjectViewModel>();
 
-            foreach (var project in Projects)
-            {
-                
-            }
+            _projectViewModels = new BindableCollection<UserReportProjectViewModel>();
             
             SortDate(SelectedDates);
             Update(SelectedDates);
@@ -87,13 +65,10 @@ namespace Zurvan.ClientApp.ViewModels
             SelectedDates.Sort();
         }
 
-        public void SomethingWasChanged()
-        {
-            MessageBox.Show("Somthing was changed to :" + Something);
-        }
+
         public void Update(List<string> showDates)
         {
-            foreach (var project in Projects)
+            foreach (var project in _projects)
             {
                 List<HourReportData> timeReportedAtSelectedDates = new List<HourReportData>();
 
