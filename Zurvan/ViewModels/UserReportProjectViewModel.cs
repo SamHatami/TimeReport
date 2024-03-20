@@ -87,8 +87,8 @@ namespace Zurvan.ClientApp.ViewModels
             get => _project.UsedTime;
             set
             {
-                NotifyOfPropertyChange(() => Friday);
-                UpdateDataBase();
+                NotifyOfPropertyChange(() => ProjectTotal);
+
             }
         }
 

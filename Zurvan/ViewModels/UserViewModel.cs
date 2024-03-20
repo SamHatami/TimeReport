@@ -53,6 +53,7 @@ namespace Zurvan.ClientApp.ViewModels
 
             _dataBaseService = dataBaseService;
             User = _dataBaseService.GetUser(userId);
+            _projects = new BindableCollection<IProject>(dataBaseService.GetUserProjects(userId));
 
             _projectViewModels = new BindableCollection<UserReportProjectViewModel>();
             
