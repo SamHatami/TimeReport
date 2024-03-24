@@ -1,21 +1,17 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-using Caliburn.Micro;
-using System.Windows;
-using System.Windows.Markup;
+﻿using Caliburn.Micro;
 using Zurvan.Core.Interfaces;
 using Zurvan.Core.TimeModels;
-using Zurvan.Core.Projects;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using String = System.String;
 
 namespace Zurvan.ClientApp.ViewModels
 {
     public class UserReportProjectViewModel : Screen
     {
-        private List<string> _selectedDates;
-
         private IDataBaseService _database;
+        private IProject _project;
+        private int _userId;
 
+        public List<string> SelectedDates;
+        public string ProjectName { get; set; }
         private HourReportData _monday;
 
         public int Monday
@@ -81,46 +77,39 @@ namespace Zurvan.ClientApp.ViewModels
             }
         }
 
-  
         public int ProjectTotal
         {
             get => _project.UsedTime;
             set
             {
                 NotifyOfPropertyChange(() => ProjectTotal);
-
             }
         }
-
-        private IProject _project;
-        private int _userId;
-
-        public string ProjectName { get; set; }
 
         public UserReportProjectViewModel(IProject project, List<string> selectedDates, IDataBaseService dataBase, int userId)
         {
             _userId = userId;
             _database = dataBase;
             _project = project;
-            _selectedDates = selectedDates;
+            SelectedDates = selectedDates;
             ProjectName = project.Name;
 
-            project.UserReportedData = _database.GetReportedTimePerUser(project.id, userId, _selectedDates);
-
-            InitializeWeekDays();
-        }
-
-        private void InitializeWeekDays()
-        {
             _monday = new HourReportData();
             _tuesday = new HourReportData();
             _wednesday = new HourReportData();
             _thursday = new HourReportData();
             _friday = new HourReportData();
+
+            UpdateWeek();
+        }
+
+        public void UpdateWeek()
+        {
+            _project.UserReportedData = _database.GetReportedTimePerUser(_project.id, _userId, SelectedDates);
             ProjectTotal = _project.UsedTime;
 
             DateTime dateValue;
-            foreach (string thisDate in _selectedDates)
+            foreach (string thisDate in SelectedDates)
             {
                 dateValue = DateTime.Parse(thisDate);
                 int timeUsed = _project.UserReportedData.Where(x => !string.IsNullOrEmpty(x.Date)).Where(x => x.Date == thisDate).Select(x => x.TimeUsed).SingleOrDefault();
@@ -129,58 +118,41 @@ namespace Zurvan.ClientApp.ViewModels
                 {
                     case "Monday":
                         _monday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Monday");
+                        Monday = _monday.TimeUsed;
                         break;
 
                     case "Tuesday":
                         _tuesday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Tuesday");
+                        Tuesday = _tuesday.TimeUsed;
                         break;
 
                     case "Wednesday":
                         _wednesday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Wednesday");
+                        Wednesday = _wednesday.TimeUsed;
                         break;
 
                     case "Thursday":
                         _thursday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Thursday");
+                        Thursday = _thursday.TimeUsed;
                         break;
 
                     case "Friday":
                         _friday = new HourReportData(timeUsed: timeUsed, date: thisDate, weekDay: "Friday");
+                        Friday = _friday.TimeUsed;
                         break;
                 }
             }
-
-            //foreach (string date in selectedDates)
-            //{
-            //    DateTimeData dateData = project.UserDateTimeReported.SingleOrDefault(x => x.Date == date);
-            //    if (dateData != null)
-            //    {
-            //        switch (dateData?.WeekDay)
-            //        {
-            //            case "Monday":
-            //                _monday.TimeUsed = dateData.TimeUsed;
-            //                break;
-            //            case "Tuesday":
-            //                _tuesday.TimeUsed = dateData.TimeUsed;
-            //                break;
-            //            case "Wednesday":
-            //                _wednesday.TimeUsed = dateData.TimeUsed;
-            //                break;
-            //            case "Thursday":
-            //                _thursday.TimeUsed = dateData.TimeUsed;
-            //                break;
-            //            case "Friday":
-            //                _friday.TimeUsed = dateData.TimeUsed;
-            //                break;
-            //        }
-            //    }
-
-            //}
         }
 
         public void UpdateDataBase(HourReportData date)
         {
-            _database.UpdateProjectByDateAndUser(_project.id, _userId, date.Date, date.TimeUsed);
+            _database.UpdateProjectByDateAndUser(_project.id, _userId, date.Date, date.TimeUsed); // TODO Hanteras på något annat sätt?
             
+        }
+
+        public void GetTotalTime()
+        {
+            //TODO gör en ny klass som hanterar detta istället för totaltimeviewModel
         }
     }
 }

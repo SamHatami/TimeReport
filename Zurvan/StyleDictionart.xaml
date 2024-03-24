@@ -96,7 +96,7 @@
     </Style>
 
 
-    <Style x:Key="DataGridHeaderTransparent" TargetType="{x:Type DataGridColumnHeader}">
+    <!--<Style x:Key="DataGridHeaderTransparent" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource Label.Primary}" />
 
@@ -122,10 +122,10 @@
                 IsHitTestVisible="False" />
             <ItemsPresenter />
         </Grid>
-    </ControlTemplate>
+    </ControlTemplate>-->
 
 
-    <ControlTemplate x:Key="DataGridTemplate1" TargetType="{x:Type DataGrid}">
+    <!--<ControlTemplate x:Key="DataGridTemplate1" TargetType="{x:Type DataGrid}">
         <Border
             Padding="{TemplateBinding Padding}"
             Background="Transparent"
@@ -188,7 +188,7 @@
                 <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </ScrollViewer>
         </Border>
-    </ControlTemplate>
+    </ControlTemplate>-->
     <Style x:Key="ListViewStyle" TargetType="{x:Type ListView}">
         <Setter Property="Background" Value="{StaticResource ListBox.Static.Background}" />
         <Setter Property="BorderBrush" Value="{StaticResource ListBox.Static.Border}" />
@@ -378,7 +378,6 @@
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
-
             </Setter.Value>
         </Setter>
     </Style>
@@ -391,11 +390,11 @@
         <Setter Property="Foreground" Value="White" />
     </Style>
 
-    <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}">
+    <!--<Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
 
         <Setter Property="BorderThickness" Value="2" />
-    </Style>
+    </Style>-->
 
 
 </ResourceDictionary>

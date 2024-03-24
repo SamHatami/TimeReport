@@ -1,13 +1,8 @@
-﻿using Microsoft.VisualBasic;
-using System.Configuration;
-using System.Data.SQLite;
-using System.Windows.Input;
+﻿using System.Data.SQLite;
 using Zurvan.Core.Interfaces;
 using Zurvan.Core.Projects;
 using Zurvan.Core.TimeModels;
 using Zurvan.Core.UserFactory;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using String = System.String;
 
 namespace Zurvan.DataBase
 {
@@ -183,11 +178,10 @@ namespace Zurvan.DataBase
         {
             List<HourReportData> TimeData = new List<HourReportData>();
 
-            string sqlRequest = "Select DISTINCT * from ProjectsUsersDateReports Where ProjectID="+projectId +" AND UserID=" + userId;
+            string sqlRequest = "Select DISTINCT * from ProjectsUsersDateReports Where ProjectID=" + projectId + " AND UserID=" + userId;
             DateTime dateValue = new DateTime();
             using (SQLiteConnection connection = new SQLiteConnection(database))
             {
-   
                 connection.Open();
                 using (var command = new SQLiteCommand(sqlRequest, connection))
                 {
@@ -204,10 +198,7 @@ namespace Zurvan.DataBase
                                 HourReportData dtd = new HourReportData(date, time, dateValue.DayOfWeek.ToString());
                                 TimeData.Add(dtd);
                             }
-
-                            int step =dataReader.StepCount;
                         }
-
                     }
                 }
             }
@@ -221,11 +212,8 @@ namespace Zurvan.DataBase
 
             if (!CheckIfDateDataExist(projectId, userId, date))
                 sqlRequest = "INSERT INTO ProjectsUsersDateReports (ProjectID, UserID, Date, Time) VALUES (@projectId, @userId, @date, @time)";
-            
             else
                 sqlRequest = "UPDATE ProjectsUsersDateReports SET Time= @time WHERE ProjectID = @projectId AND UserID= @userId AND Date= @date";
-
-            
 
             using (SQLiteConnection connection = new SQLiteConnection(database))
             {
@@ -239,6 +227,38 @@ namespace Zurvan.DataBase
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        public int GetProjectTotalPerUser(int projectId, int userId)
+        {
+            int total = 0;
+            string sqlRequest = "Select DISTINCT * from ProjectsUsersDateReports Where ProjectID=" + projectId + " AND UserID=" + userId;
+            using (SQLiteConnection connection = new SQLiteConnection(database))
+            {
+                connection.Open();
+                using (var command = new SQLiteCommand(sqlRequest, connection))
+                {
+                    using (var dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                           total = +dataReader.GetInt32(dataReader.GetOrdinal("Time"));
+                        }
+                    }
+                }
+            }
+
+            return total;
+        }
+
+        public int GetProjectTotalPerUserMonth(int projectId, int userId, int month)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateProjectTotals(int projectId)
+        {
+            throw new NotImplementedException();
         }
 
         private bool CheckIfDateDataExist(int projectId, int userId, string date)
@@ -262,8 +282,6 @@ namespace Zurvan.DataBase
             return count > 0;
         }
 
-
-
         public List<IProject> GetUserProjects(int userId)
         {
             List<IProject> projects = new List<IProject>();
@@ -283,6 +301,9 @@ namespace Zurvan.DataBase
                                 IProject project = new Project();
                                 project.id = projectId;
                                 project.Name = dataReader.GetString(dataReader.GetOrdinal("Name"));
+                                project.Description = dataReader.GetString(dataReader.GetOrdinal("Description"));
+                                project.AllocatedTime = dataReader.GetInt32(dataReader.GetOrdinal("AllocatedTime"));
+                                project.UsedTime = dataReader.GetInt32(dataReader.GetOrdinal("UsedTime"));
                                 projects.Add(project);
                             }
                         }
@@ -295,7 +316,7 @@ namespace Zurvan.DataBase
         public string GetUserType(int userId)
         {
             var sqlRequestUsers = "SELECT UsersTypes.Type FROM UsersTypes JOIN Users ON Users.UserID = UsersTypes.UserID";
-            string userType ="";
+            string userType = "";
 
             using (SQLiteConnection connection = new SQLiteConnection(database))
             {

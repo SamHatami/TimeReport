@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels"
     Title="ZurvanView"
-    MinWidth="800"
-    MinHeight="650"
+    WindowStartupLocation="CenterScreen"
+    SizeToContent="WidthAndHeight"
     d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
     Style="{DynamicResource WindowStyle}"
     mc:Ignorable="d">

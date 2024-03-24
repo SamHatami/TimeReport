@@ -7,7 +7,8 @@
     xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:LogInViewModel}"
-    d:DesignHeight="450" d:DesignWidth="800"
+    Width="400"
+    Height="400"
     mc:Ignorable="d" Background="{StaticResource Main.Background}">
 
     <Grid>
@@ -23,16 +24,16 @@
         </Grid.RowDefinitions>
         <StackPanel
             Grid.Row="0"
-            Grid.Column="0"
+            Grid.Column="1"
             Margin="10"
-            HorizontalAlignment="left"
+            HorizontalAlignment="Center"
             VerticalAlignment="top">
             <Label
-                Margin="0,0,0,-10"
+                Margin="0,-5,0,-15"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Content="ZURVAN"
-                FontSize="20"
+                FontSize="30"
                 FontStretch="Expanded"
                 Foreground="White" FontWeight="Bold" />
             <Label

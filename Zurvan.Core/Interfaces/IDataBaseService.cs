@@ -19,5 +19,11 @@ namespace Zurvan.Core.Interfaces
         List<HourReportData> GetReportedTimePerUser(int projectId, int userId, List<string> selectedDates);
 
         void UpdateProjectByDateAndUser(int projectId, int userId, string date, int updatedTime);
+        
+        int GetProjectTotalPerUser(int projectId, int userId);
+        
+        int GetProjectTotalPerUserMonth(int projectId, int userId, int month);
+
+        int UpdateProjectTotals(int projectId);
     }
 }

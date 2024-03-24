@@ -13,10 +13,18 @@ namespace Zurvan.Test
         private List<IUser> users = new List<IUser>();
         private readonly ITestOutputHelper output;
         private int userId;
-
+        private List<string> SelectedDates;
         public DataBaseTests(ITestOutputHelper output)
         {
             this.output = output;
+            SelectedDates = new List<string>()
+            {
+                "2024-01-01",
+                "2024-01-02",
+                "2024-01-03",
+                "2024-01-04",
+                "2024-01-05"
+            };
         }
   
         [Fact]
@@ -89,7 +97,7 @@ namespace Zurvan.Test
             int userId = 1;
             int projectId = 10;
 
-            List<HourReportData>reportedTime = dbservice.GetReportedTimePerUser(projectId, userId);
+            List<HourReportData>reportedTime = dbservice.GetReportedTimePerUser(projectId, userId,SelectedDates);
 
             reportedTime.Should().NotBeNull();
 
@@ -97,6 +105,33 @@ namespace Zurvan.Test
             output.WriteLine("Date: " + reportedTime.ElementAt(0).Date + " has reported time of " + reportedTime.ElementAt(0).TimeUsed );
             
 
+        }
+        [Fact]
+        public void UpdateProjectByDateAndUser()
+        {
+            int projectId = 10;
+            int userId = 1;
+            string date = "2024-01-01";
+            int updatedTime = 5;
+            dbservice.UpdateProjectByDateAndUser(projectId, userId, date, updatedTime);
+            
+            //Assert
+            List<HourReportData> reportedTimePerUser = dbservice.GetReportedTimePerUser(projectId, userId, SelectedDates);
+            reportedTimePerUser[0].TimeUsed.Should().Be(updatedTime);
+        }
+        [Fact]
+        public void GetReportedTimePerUser()
+        {
+            int projectId = 10;
+            int userId = 1;
+            List<HourReportData> reportedTimePerUser = dbservice.GetReportedTimePerUser(projectId, userId, SelectedDates);
+            
+            reportedTimePerUser.Should().NotBeNull();
+            
+            foreach (HourReportData data in reportedTimePerUser)
+            {
+                output.WriteLine("Date: " + data.Date + " has reported time of " + data.TimeUsed);
+            }
         }
     }
 }

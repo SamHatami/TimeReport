@@ -1,24 +1,17 @@
 ﻿<UserControl
     x:Class="Zurvan.ClientApp.Views.UserView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
-    xmlns:converters="clr-namespace:Zurvan.ClientApp.Views.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+    xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
     xmlns:viewmodels="clr-namespace:Zurvan.ClientApp.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:UserViewModel}"
-    d:DesignHeight="450"
-    d:DesignWidth="1200"
+    MinWidth="1000"
+    MinHeight="300"
     Background="{StaticResource Main.Background}"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <converters:ProjectViewConverter x:Key="ProjectViewConverter" />
-        <converters:UserTimeConverter x:Key="TImeConverter" />
-        
-    </UserControl.Resources>
     <Grid
         x:Name="MainGrid"
         Margin="5"
@@ -26,31 +19,21 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="30" />
-            <ColumnDefinition Width="Auto" MinWidth="800" />
+            <ColumnDefinition Width="0.8*" MinWidth="800" />
             <ColumnDefinition Width="*" MinWidth="30" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="150" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <TextBox
-            Grid.Row="0"
-            Grid.Column="1"
-            Margin="160,0,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Text="{Binding User.FirstName, Mode=TwoWay}"
-            TextWrapping="Wrap" />
-
-
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource UI.Background}" />
-        <Rectangle Grid.Row="1" Grid.Column="1" RadiusX="10" RadiusY="10" Stroke="#4b4b48" StrokeThickness="5" Margin="-5"/>
-
-
+        <!--<Rectangle Grid.Row="1" Grid.Column="1" Fill="{StaticResource UI.Background}" />
+        <Rectangle Grid.Row="1" Grid.Column="1" RadiusX="10" RadiusY="10" Stroke="#4b4b48" StrokeThickness="5" Margin="-5" />-->
 
         <DataGrid
+            x:Name="ProjectTable"
             Grid.Row="1"
             Grid.Column="1"
             AutoGenerateColumns="False"
@@ -64,18 +47,18 @@
             SelectedItem="key"
             SelectionMode="Single"
             HeadersVisibility="Column"
-            Background="{x:Null}">
+            Background="{x:Null}"
+            ColumnWidth="*">
 
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    Width="300"
+                    Width="*"
                     Binding="{Binding ProjectName}"
                     Header="Project"
                     HeaderStyle="{DynamicResource DataGridHeaderTransparentLeft}" />
-                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}" Width="60">
                     <DataGridTemplateColumn.Header>
-                        <Label Content="Monday" Style="{StaticResource Label}" />
-
+                        <TextBlock TextAlignment="Center" Text="{Binding DataContext.HeaderDayStrings[0], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -86,9 +69,9 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}" Width="60">
                     <DataGridTemplateColumn.Header>
-                        <Label Content="Tuesday" Style="{StaticResource Label}" />
+                        <TextBlock TextAlignment="Center" Text="{Binding DataContext.HeaderDayStrings[1], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -99,9 +82,9 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}" Width="60">
                     <DataGridTemplateColumn.Header>
-                        <Label Content="Wednesday" Style="{StaticResource Label}" />
+                        <TextBlock TextAlignment="Center" Text="{Binding DataContext.HeaderDayStrings[2], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -112,9 +95,9 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}" Width="60">
                     <DataGridTemplateColumn.Header>
-                        <Label Content="Thursday" Style="{StaticResource Label}" />
+                        <TextBlock TextAlignment="Center" Text="{Binding DataContext.HeaderDayStrings[3], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -125,9 +108,9 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}" Width="60">
                     <DataGridTemplateColumn.Header>
-                        <Label Content="Friday" Style="{StaticResource Label}" />
+                        <TextBlock TextAlignment="Center" Text="{Binding DataContext.HeaderDayStrings[4], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -138,23 +121,100 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}">
+                <DataGridTemplateColumn HeaderStyle="{DynamicResource DataGridHeaderTransparent}" Width="60">
                     <DataGridTemplateColumn.Header>
-                        <Label Content="Project Total"  Style="{StaticResource Label}" />
+                        <Label Content="Project Total" Style="{StaticResource Label}" />
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <TextBox
-                            Width="40"
-                            Style="{StaticResource TimeTextBox}"
-                            Text="{Binding ProjectTotal, UpdateSourceTrigger=PropertyChanged}" />
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox
+                                Width="40"
+                                Style="{StaticResource TimeTextBox}"
+                                Text="{Binding ProjectTotal, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
+        <DataGrid x:Name="TotalWeek"   
+                  Grid.Row="2" Grid.Column="1" 
+                  CanUserDeleteRows="False"
+                  CanUserReorderColumns="False"
+                  CanUserResizeColumns="False"
+                  CanUserResizeRows="False"
+                  CanUserSortColumns="False"
+                  HeadersVisibility="None"  
+                  ColumnWidth="*" 
+                  AutoGenerateColumns ="False" 
+                  ItemsSource="{Binding TotalWeek}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*"/>
+
+                <DataGridTemplateColumn Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Text="{Binding MondayTotal}"
+                                TextAlignment="Center"
+                                VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding TuesdayTotal}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding WednesdayTotal}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding ThursdayTotal}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding FridayTotal}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="60"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel>
+            <Label Content ="2024" />
+            <Label Content="{Binding CurrentWeek, Mode=OneWay}" Padding="10" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <Button Content="Prev" HorizontalAlignment="Left"
+                    VerticalAlignment="Center" cal:Message.Attach="SetWeek('PreviousWeek')" Width="50" Height="20" />
+            <Label Content="{Binding WeekIntervalDates}" Width="110" Height="30" />
+            <Button Content="Next" HorizontalAlignment="Left" Width="50" Height="20"
+                    VerticalAlignment="Center" cal:Message.Attach="SetWeek('NextWeek')" />
+
+            <TextBox
+                Grid.Column="1"
+                Margin="189,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="{Binding User.FirstName, Mode=TwoWay}"
+                TextWrapping="Wrap" />
+        </StackPanel>
     </Grid>
 </UserControl>
-
-
